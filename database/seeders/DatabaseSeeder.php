@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        User::updateOrCreate(
+        $student = User::updateOrCreate(
             ['email' => 'alumno@minilms.test'],
             [
                 'name' => 'Alumno Demo',
@@ -35,5 +36,17 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call(CourseSeeder::class);
+
+        $ecografia = Course::where('slug', 'introduccion-a-la-ecografia-clinica')->first();
+
+        if ($ecografia) {
+            $student->enrollments()->firstOrCreate(
+                ['course_id' => $ecografia->id],
+                [
+                    'status' => 'active',
+                    'enrolled_at' => now(),
+                ],
+            );
+        }
     }
 }

@@ -41,6 +41,17 @@ export default function Index({ courses }) {
                                             {course.description}
                                         </p>
                                     )}
+                                    <div className="mt-3">
+                                        {course.is_enrolled ? (
+                                            <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                                Inscripto
+                                            </span>
+                                        ) : (
+                                            <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                                                Disponible
+                                            </span>
+                                        )}
+                                    </div>
                                     <div className="mt-4 flex items-center justify-between">
                                         <span className="text-sm font-medium text-gray-700">
                                             {formatPrice(course.price)}
@@ -52,7 +63,9 @@ export default function Index({ courses }) {
                                             )}
                                             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
                                         >
-                                            Ver curso
+                                            {course.is_enrolled
+                                                ? 'Continuar'
+                                                : 'Ver curso'}
                                         </Link>
                                     </div>
                                 </div>

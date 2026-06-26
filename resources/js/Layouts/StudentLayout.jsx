@@ -35,6 +35,12 @@ export default function StudentLayout({ header, children }) {
                                 >
                                     Cursos
                                 </NavLink>
+                                <NavLink
+                                    href={route('student.my-courses.index')}
+                                    active={route().current('student.my-courses.*')}
+                                >
+                                    Mis cursos
+                                </NavLink>
                             </div>
                         </div>
 
@@ -141,6 +147,12 @@ export default function StudentLayout({ header, children }) {
                             active={route().current('student.courses.*')}
                         >
                             Cursos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('student.my-courses.index')}
+                            active={route().current('student.my-courses.*')}
+                        >
+                            Mis cursos
                         </ResponsiveNavLink>
                     </div>
 

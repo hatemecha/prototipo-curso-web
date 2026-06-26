@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\StudentLessonController;
+use App\Http\Controllers\Student\StudentMyCourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +32,8 @@ Route::middleware('auth')->prefix('student')->name('student.')->group(function (
     Route::get('/dashboard', StudentDashboardController::class)->name('dashboard');
     Route::get('/courses', [StudentCourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/{course:slug}', [StudentCourseController::class, 'show'])->name('courses.show');
+    Route::post('/courses/{course:slug}/enroll', [StudentCourseController::class, 'enroll'])->name('courses.enroll');
+    Route::get('/my-courses', [StudentMyCourseController::class, 'index'])->name('my-courses.index');
     Route::get('/lessons/{lesson}', [StudentLessonController::class, 'show'])->name('lessons.show');
 });
 
