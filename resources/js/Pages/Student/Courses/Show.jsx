@@ -126,15 +126,29 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                                         </p>
                                     )}
                                 </div>
-                                <Link
-                                    href={route(
-                                        'student.courses.exam.show',
-                                        course.slug,
+                                <div className="flex items-center gap-2">
+                                    {exam.last_attempt?.certificate_id && (
+                                        <a
+                                            href={route(
+                                                'student.certificates.download',
+                                                exam.last_attempt
+                                                    .certificate_id,
+                                            )}
+                                            className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700"
+                                        >
+                                            Descargar certificado
+                                        </a>
                                     )}
-                                    className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
-                                >
-                                    Rendir examen
-                                </Link>
+                                    <Link
+                                        href={route(
+                                            'student.courses.exam.show',
+                                            course.slug,
+                                        )}
+                                        className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+                                    >
+                                        Rendir examen
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     )}

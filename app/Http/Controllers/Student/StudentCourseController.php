@@ -106,6 +106,9 @@ class StudentCourseController extends Controller
                     'score' => $lastAttempt->score,
                     'status' => $lastAttempt->status,
                     'submitted_at' => $lastAttempt->submitted_at?->toDateTimeString(),
+                    'certificate_id' => $lastAttempt->status === 'passed'
+                        ? $lastAttempt->certificate?->id
+                        : null,
                 ] : null,
             ] : null,
         ]);

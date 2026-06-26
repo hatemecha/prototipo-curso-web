@@ -43,6 +43,11 @@ class Course extends Model
         return $this->hasOne(Exam::class);
     }
 
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'course_enrollments')

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\StudentCertificateController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\StudentExamController;
@@ -43,6 +44,8 @@ Route::middleware('auth')->prefix('student')->name('student.')->group(function (
     Route::post('/lessons/{lesson}/complete', [StudentLessonProgressController::class, 'complete'])->name('lessons.complete');
     Route::delete('/lessons/{lesson}/complete', [StudentLessonProgressController::class, 'uncomplete'])->name('lessons.uncomplete');
     Route::get('/materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
+    Route::get('/certificates', [StudentCertificateController::class, 'index'])->name('certificates.index');
+    Route::get('/certificates/{certificate}/download', [StudentCertificateController::class, 'download'])->name('certificates.download');
 });
 
 require __DIR__.'/auth.php';

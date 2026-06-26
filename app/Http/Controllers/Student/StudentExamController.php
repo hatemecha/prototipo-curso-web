@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Exam;
-use App\Models\ExamAttempt;
+use App\Services\CertificateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +66,7 @@ class StudentExamController extends Controller
         ]);
     }
 
-    public function submit(Request $request, Course $course): RedirectResponse
+    public function submit(Request $request, Course $course, CertificateService $certificateService): RedirectResponse
     {
         $exam = $this->resolveExam($request, $course);
 
@@ -112,7 +112,7 @@ class StudentExamController extends Controller
         $score = $totalPoints > 0 ? (int) round(($earnedPoints / $totalPoints) * 100) : 0;
         $status = $score >= $exam->passing_score ? 'passed' : 'failed';
 
-        DB::transaction(function () use ($request, $exam, $score, $totalPoints, $earnedPoints, $status, $answerRows) {
+        $attempt = DB::transaction(function () use ($request, $exam, $score, $totalPoints, $earnedPoints, $status, $answerRows) {
             $attempt = $exam->attempts()->create([
                 'user_id' => $request->user()->id,
                 'score' => $score,
@@ -124,11 +124,16 @@ class StudentExamController extends Controller
             ]);
 
             $attempt->answers()->createMany($answerRows);
+
+            return $attempt;
         });
 
-        $message = $status === 'passed'
-            ? "¡Aprobaste el examen con {$score}%!"
-            : "No alcanzaste el puntaje mínimo. Obtuviste {$score}%.";
+        $message = "No alcanzaste el puntaje mínimo. Obtuviste {$score}%.";
+
+        if ($status === 'passed') {
+            $certificateService->generateForAttempt($attempt);
+            $message = "¡Aprobaste el examen con {$score}%! Tu certificado ya está disponible en \"Certificados\".";
+        }
 
         return redirect()
             ->route('student.courses.exam.show', $course->slug)
