@@ -7,6 +7,42 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Emails en desarrollo local (Mini LMS Médico)
+
+El sistema envía emails básicos en estos eventos:
+
+- Registro de usuario → "Bienvenido a Mini LMS Médico".
+- Inscripción a un curso (nueva o reactivada) → "Ya tenés acceso al curso {curso}".
+- Aprobar un examen → "Aprobaste el examen de {curso}".
+- Certificado generado → "Tu certificado de {curso} está disponible".
+
+Por defecto se usa el mailer `log`, así que no se necesita SMTP ni credenciales externas. En `.env`:
+
+```env
+MAIL_MAILER=log
+```
+
+Los emails se escriben en `storage/logs/laravel.log`. Para verlos en vivo:
+
+```bash
+tail -f storage/logs/laravel.log
+```
+
+Opcional con [Mailpit](https://github.com/axllent/mailpit) (no obligatorio) para ver los emails en una bandeja web:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+```
+
+Luego levantar Mailpit (`mailpit`) y abrir http://localhost:8025.
+
+Notas:
+
+- Un fallo de email nunca interrumpe el flujo (registro, inscripción, examen o certificado): el error se registra en el log y la operación continúa.
+- Los Mailables aún no usan colas; quedan preparados para encolarse en una fase futura.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

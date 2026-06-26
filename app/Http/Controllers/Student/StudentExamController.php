@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CertificateAvailableMail;
+use App\Mail\ExamPassedMail;
 use App\Models\Course;
 use App\Models\Exam;
 use App\Services\CertificateService;
+use App\Support\SafeMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -131,7 +134,17 @@ class StudentExamController extends Controller
         $message = "No alcanzaste el puntaje mínimo. Obtuviste {$score}%.";
 
         if ($status === 'passed') {
-            $certificateService->generateForAttempt($attempt);
+            $student = $request->user();
+
+            SafeMail::send($student->email, new ExamPassedMail($student, $course, $attempt));
+
+            $certificate = $certificateService->generateForAttempt($attempt);
+
+            // Solo notificar si el certificado fue creado en este flujo (no duplicar).
+            if ($certificate && $certificate->wasRecentlyCreated) {
+                SafeMail::send($student->email, new CertificateAvailableMail($certificate));
+            }
+
             $message = "¡Aprobaste el examen con {$score}%! Tu certificado ya está disponible en \"Certificados\".";
         }
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CourseEnrollmentMail;
 use App\Models\Course;
+use App\Support\SafeMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -126,11 +128,18 @@ class StudentCourseController extends Controller
             ],
         );
 
+        // Notificar solo cuando hay un cambio real: inscripción nueva o reactivación.
+        $shouldNotify = $enrollment->wasRecentlyCreated || $enrollment->status !== 'active';
+
         if ($enrollment->status !== 'active') {
             $enrollment->update([
                 'status' => 'active',
                 'enrolled_at' => $enrollment->enrolled_at ?? now(),
             ]);
+        }
+
+        if ($shouldNotify) {
+            SafeMail::send($request->user()->email, new CourseEnrollmentMail($request->user(), $course));
         }
 
         return redirect()
