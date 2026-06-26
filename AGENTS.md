@@ -1,5 +1,26 @@
 # AGENTS.md
 
+## Estado final del proyecto (actualizado en Fase 10)
+
+Todas las fases 0–10 están **completadas y verificadas**.
+
+- **Fase 1** — Setup base, auth (Breeze), roles `admin`/`student`, Filament, seed de admin/alumno.
+- **Fase 2** — `Course`, `CourseModule`, `Lesson` + Resources Filament.
+- **Fase 3** — Área alumno con Inertia + React + Tailwind.
+- **Fase 4** — `CourseEnrollment` (inscripción simulada) + "Mis cursos".
+- **Fase 5** — `LessonProgress` (progreso de clases).
+- **Fase 6** — `LessonMaterial` (materiales con descarga controlada).
+- **Fase 7** — `Exam`, `ExamQuestion`, `ExamOption`, `ExamAttempt`, `ExamAnswer` (corrección en backend).
+- **Fase 8** — `Certificate` (PDF con DomPDF, número único, storage privado, descarga controlada).
+- **Fase 9** — Emails básicos (4 Mailables, `SafeMail`, `MAIL_MAILER=log`).
+- **Fase 10** — Limpieza, documentación (`README.md`, `CHECKLIST.md`) y suite de tests permanente.
+
+**Tests:** la suite permanente vive en `tests/Feature/` (Breeze) y `tests/Feature/Lms/` (LMS). En fases previas se usaron tests "smoke" temporales que se eliminaban al terminar cada fase; en la Fase 10 se consolidaron como suite permanente. Comando: `php artisan test`.
+
+**Decisiones técnicas clave:** `Course hasOne Exam`; certificados y materiales en disco privado `local`; listener de bienvenida vía auto-discovery de Laravel; emails sin colas (preparados para encolar).
+
+---
+
 ## Objetivo del proyecto
 
 Construir un proyecto de práctica llamado **Mini LMS Médico**, una plataforma mínima de cursos médicos para dominar el stack:

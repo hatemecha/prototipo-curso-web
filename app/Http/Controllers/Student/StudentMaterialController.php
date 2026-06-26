@@ -19,11 +19,13 @@ class StudentMaterialController extends Controller
         abort_unless($course && $course->status === 'published', 404);
         abort_unless($request->user()->isEnrolledIn($course), 403);
         abort_unless($material->is_downloadable, 403);
-        abort_unless(Storage::disk('public')->exists($material->file_path), 404);
+        $disk = Storage::disk(LessonMaterial::DISK);
+
+        abort_unless($disk->exists($material->file_path), 404);
 
         $extension = pathinfo($material->file_path, PATHINFO_EXTENSION);
         $downloadName = $material->title.($extension ? '.'.$extension : '');
 
-        return Storage::disk('public')->download($material->file_path, $downloadName);
+        return $disk->download($material->file_path, $downloadName);
     }
 }

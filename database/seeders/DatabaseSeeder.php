@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Course;
+use App\Models\LessonMaterial;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -88,8 +89,8 @@ class DatabaseSeeder extends Seeder
 
     private function seedMaterial($lesson, string $title, string $path, bool $downloadable): void
     {
-        if (! Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->put(
+        if (! Storage::disk(LessonMaterial::DISK)->exists($path)) {
+            Storage::disk(LessonMaterial::DISK)->put(
                 $path,
                 "%PDF-1.4\nMaterial de prueba: {$title}\n",
             );

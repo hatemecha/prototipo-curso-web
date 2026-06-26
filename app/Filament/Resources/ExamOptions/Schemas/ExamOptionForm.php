@@ -30,6 +30,7 @@ class ExamOptionForm
                 TextInput::make('order')
                     ->label('Orden')
                     ->numeric()
+                    ->minValue(0)
                     ->default(0)
                     ->required(),
             ]);

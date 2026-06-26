@@ -29,6 +29,7 @@ class ExamQuestionForm
                 TextInput::make('order')
                     ->label('Orden')
                     ->numeric()
+                    ->minValue(0)
                     ->default(0)
                     ->required(),
                 TextInput::make('points')
@@ -55,6 +56,16 @@ class ExamQuestionForm
                     ])
                     ->defaultItems(4)
                     ->minItems(2)
+                    ->rules([
+                        function (string $attribute, mixed $value, \Closure $fail): void {
+                            $hasCorrectOption = collect($value ?? [])
+                                ->contains(fn ($option): bool => (bool) data_get($option, 'is_correct'));
+
+                            if (! $hasCorrectOption) {
+                                $fail('Marcá al menos una opción correcta.');
+                            }
+                        },
+                    ])
                     ->columnSpanFull()
                     ->helperText('Marcá al menos una opción como correcta.'),
             ]);

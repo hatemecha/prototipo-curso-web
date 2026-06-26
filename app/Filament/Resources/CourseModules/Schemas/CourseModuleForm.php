@@ -26,6 +26,7 @@ class CourseModuleForm
                     ->columnSpanFull(),
                 TextInput::make('order')
                     ->numeric()
+                    ->minValue(0)
                     ->default(0)
                     ->required(),
             ]);

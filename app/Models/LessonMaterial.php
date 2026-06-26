@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['lesson_id', 'title', 'file_path', 'file_type', 'is_downloadable'])]
 class LessonMaterial extends Model
 {
+    public const DISK = 'local';
+
     protected function casts(): array
     {
         return [

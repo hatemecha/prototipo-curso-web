@@ -34,6 +34,7 @@ class CourseForm
                     ->columnSpanFull(),
                 TextInput::make('price')
                     ->numeric()
+                    ->minValue(0)
                     ->default(0)
                     ->prefix('$')
                     ->required(),

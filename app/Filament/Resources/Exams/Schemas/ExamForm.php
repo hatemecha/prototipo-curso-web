@@ -18,6 +18,10 @@ class ExamForm
                     ->relationship('course', 'title')
                     ->searchable()
                     ->preload()
+                    ->unique(table: 'exams', column: 'course_id', ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'Este curso ya tiene un examen asociado.',
+                    ])
                     ->required(),
                 TextInput::make('title')
                     ->label('Título')

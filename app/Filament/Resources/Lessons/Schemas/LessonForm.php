@@ -53,6 +53,7 @@ class LessonForm
                     ->maxLength(255),
                 TextInput::make('order')
                     ->numeric()
+                    ->minValue(0)
                     ->default(0)
                     ->required(),
             ]);

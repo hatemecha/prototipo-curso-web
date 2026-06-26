@@ -26,7 +26,8 @@ class LessonMaterialForm
                     ->maxLength(255),
                 FileUpload::make('file_path')
                     ->label('Archivo')
-                    ->disk('public')
+                    ->disk('local')
+                    ->visibility('private')
                     ->directory('lesson-materials')
                     ->acceptedFileTypes([
                         'application/pdf',
@@ -36,6 +37,7 @@ class LessonMaterialForm
                         'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     ])
                     ->maxSize(10240)
+                    ->helperText('El archivo queda en storage privado y solo se descarga por rutas validadas.')
                     ->required(),
                 Toggle::make('is_downloadable')
                     ->label('Descargable')
