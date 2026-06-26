@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -58,7 +59,48 @@ class DatabaseSeeder extends Seeder
                         'completed_at' => now(),
                     ],
                 );
+
+                $this->seedMaterial(
+                    $firstLesson,
+                    'Guía de introducción al ultrasonido',
+                    'lesson-materials/guia-ultrasonido.pdf',
+                    true,
+                );
             }
         }
+
+        $radiologia = Course::where('slug', 'radiologia-toracica-basica')->first();
+
+        if ($radiologia) {
+            $radioLesson = $radiologia->lessons()->orderBy('order')->first();
+
+            if ($radioLesson) {
+                $this->seedMaterial(
+                    $radioLesson,
+                    'Checklist de lectura de Rx de tórax',
+                    'lesson-materials/checklist-rx-torax.pdf',
+                    false,
+                );
+            }
+        }
+    }
+
+    private function seedMaterial($lesson, string $title, string $path, bool $downloadable): void
+    {
+        if (! Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->put(
+                $path,
+                "%PDF-1.4\nMaterial de prueba: {$title}\n",
+            );
+        }
+
+        $lesson->materials()->updateOrCreate(
+            ['title' => $title],
+            [
+                'file_path' => $path,
+                'file_type' => strtolower(pathinfo($path, PATHINFO_EXTENSION)),
+                'is_downloadable' => $downloadable,
+            ],
+        );
     }
 }

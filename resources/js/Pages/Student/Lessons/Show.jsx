@@ -103,6 +103,48 @@ export default function Show({ lesson, progress }) {
                             </div>
                         )}
 
+                        {lesson.materials.length > 0 && (
+                            <div className="mt-6 border-t border-gray-100 pt-6">
+                                <h3 className="mb-3 text-sm font-semibold text-gray-800">
+                                    Materiales de la clase
+                                </h3>
+                                <ul className="space-y-2">
+                                    {lesson.materials.map((material) => (
+                                        <li
+                                            key={material.id}
+                                            className="flex items-center justify-between rounded-md border border-gray-200 px-4 py-2"
+                                        >
+                                            <div className="flex items-center gap-2 text-sm text-gray-700">
+                                                <span className="font-medium">
+                                                    {material.title}
+                                                </span>
+                                                {material.file_type && (
+                                                    <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs uppercase text-gray-500">
+                                                        {material.file_type}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {material.is_downloadable ? (
+                                                <a
+                                                    href={route(
+                                                        'student.materials.download',
+                                                        material.id,
+                                                    )}
+                                                    className="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-indigo-700"
+                                                >
+                                                    Descargar
+                                                </a>
+                                            ) : (
+                                                <span className="text-xs italic text-gray-400">
+                                                    Material no descargable
+                                                </span>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
                         <div className="mt-6 border-t border-gray-100 pt-6">
                             {lesson.is_completed ? (
                                 <form onSubmit={markPending}>

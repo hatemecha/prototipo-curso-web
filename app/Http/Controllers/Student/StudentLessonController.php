@@ -12,7 +12,7 @@ class StudentLessonController extends Controller
 {
     public function show(Request $request, Lesson $lesson): Response
     {
-        $lesson->load(['course', 'module']);
+        $lesson->load(['course', 'module', 'materials']);
 
         abort_unless($lesson->course && $lesson->course->status === 'published', 404);
 
@@ -47,6 +47,12 @@ class StudentLessonController extends Controller
                 'module' => $lesson->module ? [
                     'title' => $lesson->module->title,
                 ] : null,
+                'materials' => $lesson->materials->map(fn ($material) => [
+                    'id' => $material->id,
+                    'title' => $material->title,
+                    'file_type' => $material->file_type,
+                    'is_downloadable' => $material->is_downloadable,
+                ]),
             ],
             'progress' => [
                 'total' => $totalLessons,

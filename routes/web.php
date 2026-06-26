@@ -5,6 +5,7 @@ use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\StudentLessonController;
 use App\Http\Controllers\Student\StudentLessonProgressController;
+use App\Http\Controllers\Student\StudentMaterialController;
 use App\Http\Controllers\Student\StudentMyCourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::middleware('auth')->prefix('student')->name('student.')->group(function (
     Route::get('/lessons/{lesson}', [StudentLessonController::class, 'show'])->name('lessons.show');
     Route::post('/lessons/{lesson}/complete', [StudentLessonProgressController::class, 'complete'])->name('lessons.complete');
     Route::delete('/lessons/{lesson}/complete', [StudentLessonProgressController::class, 'uncomplete'])->name('lessons.uncomplete');
+    Route::get('/materials/{material}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
 });
 
 require __DIR__.'/auth.php';
