@@ -9,7 +9,7 @@ function formatPrice(price) {
     return `$${value.toFixed(2)}`;
 }
 
-export default function Show({ course, isEnrolled, progress }) {
+export default function Show({ course, isEnrolled, progress, exam }) {
     const flash = usePage().props.flash;
     const { post, processing } = useForm();
 
@@ -95,6 +95,47 @@ export default function Show({ course, isEnrolled, progress }) {
                         <div className="rounded-lg border border-dashed border-gray-300 bg-white p-4 text-sm text-gray-500">
                             Inscribite para acceder al contenido completo de las
                             clases.
+                        </div>
+                    )}
+
+                    {isEnrolled && exam && (
+                        <div className="rounded-lg bg-white p-6 shadow-sm">
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                <div>
+                                    <h3 className="font-semibold text-gray-900">
+                                        Examen: {exam.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-500">
+                                        Puntaje mínimo: {exam.passing_score}%
+                                    </p>
+                                    {exam.last_attempt && (
+                                        <p
+                                            className={`mt-1 text-sm font-medium ${
+                                                exam.last_attempt.status ===
+                                                'passed'
+                                                    ? 'text-green-600'
+                                                    : 'text-red-600'
+                                            }`}
+                                        >
+                                            Último intento:{' '}
+                                            {exam.last_attempt.status ===
+                                            'passed'
+                                                ? 'Aprobado'
+                                                : 'Desaprobado'}{' '}
+                                            ({exam.last_attempt.score}%)
+                                        </p>
+                                    )}
+                                </div>
+                                <Link
+                                    href={route(
+                                        'student.courses.exam.show',
+                                        course.slug,
+                                    )}
+                                    className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+                                >
+                                    Rendir examen
+                                </Link>
+                            </div>
                         </div>
                     )}
 

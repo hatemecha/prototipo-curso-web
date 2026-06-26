@@ -61,6 +61,20 @@ class StudentCourseController extends Controller
             ? (int) round(($completedLessons / $totalLessons) * 100)
             : 0;
 
+        $exam = $isEnrolled
+            ? $course->exam()->where('is_active', true)->withCount('questions')->first()
+            : null;
+
+        $hasExam = $exam !== null && $exam->questions_count > 0;
+
+        $lastAttempt = $hasExam
+            ? $exam->attempts()
+                ->where('user_id', $request->user()->id)
+                ->whereIn('status', ['passed', 'failed'])
+                ->latest('submitted_at')
+                ->first()
+            : null;
+
         return Inertia::render('Student/Courses/Show', [
             'course' => [
                 'id' => $course->id,
@@ -85,6 +99,15 @@ class StudentCourseController extends Controller
                 'completed' => $completedLessons,
                 'percent' => $progressPercent,
             ],
+            'exam' => $hasExam ? [
+                'title' => $exam->title,
+                'passing_score' => $exam->passing_score,
+                'last_attempt' => $lastAttempt ? [
+                    'score' => $lastAttempt->score,
+                    'status' => $lastAttempt->status,
+                    'submitted_at' => $lastAttempt->submitted_at?->toDateTimeString(),
+                ] : null,
+            ] : null,
         ]);
     }
 

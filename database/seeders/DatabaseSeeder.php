@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call(CourseSeeder::class);
+        $this->call(ExamSeeder::class);
 
         $ecografia = Course::where('slug', 'introduccion-a-la-ecografia-clinica')->first();
 
