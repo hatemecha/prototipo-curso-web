@@ -1,6 +1,41 @@
 import StudentLayout from '@/Layouts/StudentLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
+function Icon({ name, className = 'h-5 w-5' }) {
+    const paths = {
+        back: 'M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18',
+        check: 'M4.5 12.75l6 6 9-13.5',
+        play: 'M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z',
+        download: 'M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3',
+        doc: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z',
+    };
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d={paths[name]} />
+        </svg>
+    );
+}
+
+function ProgressBar({ progress }) {
+    return (
+        <div>
+            <div className="mb-2 flex justify-between text-sm font-medium text-muted">
+                <span>Progreso del curso</span>
+                <span className="font-semibold text-ink">{progress.percent}%</span>
+            </div>
+            <div className="h-2.5 w-full overflow-hidden rounded-full bg-soft">
+                <div
+                    className="h-full rounded-full bg-primary transition-all"
+                    style={{ width: `${progress.percent}%` }}
+                />
+            </div>
+            <p className="mt-2 text-xs text-muted">
+                {progress.completed}/{progress.total} clases completadas
+            </p>
+        </div>
+    );
+}
+
 export default function Show({ lesson, progress }) {
     const { post, delete: destroy, processing } = useForm();
 
@@ -21,137 +56,83 @@ export default function Show({ lesson, progress }) {
     return (
         <StudentLayout
             header={
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        {lesson.title}
-                    </h2>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p className="eyebrow">Clase</p>
+                        <h1 className="mt-2 font-display text-3xl font-extrabold text-ink">
+                            {lesson.title}
+                        </h1>
+                    </div>
                     <Link
                         href={route('student.courses.show', lesson.course.slug)}
-                        className="text-sm text-indigo-600 hover:underline"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primaryHover"
                     >
-                        ← Volver al curso
+                        <Icon name="back" className="h-4 w-4" />
+                        Volver al curso
                     </Link>
                 </div>
             }
         >
             <Head title={lesson.title} />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-3xl space-y-6 px-4 sm:px-6 lg:px-8">
-                    <div className="rounded-lg bg-white p-4 shadow-sm">
-                        <div className="mb-1 flex justify-between text-sm text-gray-600">
-                            <span>Progreso del curso</span>
-                            <span>
-                                {progress.completed}/{progress.total} clases (
-                                {progress.percent}%)
-                            </span>
-                        </div>
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
-                            <div
-                                className="h-full rounded-full bg-indigo-600 transition-all"
-                                style={{ width: `${progress.percent}%` }}
-                            />
-                        </div>
+            <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_320px] lg:px-8">
+                <article className="card overflow-hidden">
+                    <div className="bg-hero p-7 text-onHero">
+                        <p className="text-sm font-semibold text-onHeroMute">
+                            {lesson.course.title}
+                            {lesson.module && ` · ${lesson.module.title}`}
+                        </p>
+                        <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight">
+                            {lesson.title}
+                        </h2>
                     </div>
 
-                    <div className="rounded-lg bg-white p-6 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <div className="text-sm text-gray-500">
-                                <span className="font-medium text-gray-700">
-                                    {lesson.course.title}
-                                </span>
-                                {lesson.module && (
-                                    <>
-                                        {' · '}
-                                        <span>{lesson.module.title}</span>
-                                    </>
-                                )}
-                            </div>
-                            {lesson.is_completed ? (
-                                <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
-                                    ✓ Completada
-                                </span>
-                            ) : (
-                                <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-                                    Pendiente
-                                </span>
-                            )}
-                        </div>
-
+                    <div className="p-7">
                         {lesson.description && (
-                            <p className="mt-4 text-gray-700">
+                            <p className="text-base leading-8 text-ink">
                                 {lesson.description}
                             </p>
                         )}
 
                         {lesson.content && (
-                            <div className="mt-4 whitespace-pre-line text-gray-800">
+                            <div className="mt-5 whitespace-pre-line border-t border-line pt-5 leading-8 text-ink">
                                 {lesson.content}
                             </div>
                         )}
 
                         {lesson.video_url && (
-                            <div className="mt-6">
+                            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-soft/60 p-5">
+                                <div className="flex items-center gap-3">
+                                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                        <Icon name="play" className="h-5 w-5" />
+                                    </span>
+                                    <p className="font-semibold text-ink">
+                                        Video de la clase
+                                    </p>
+                                </div>
                                 <a
                                     href={lesson.video_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+                                    className="btn-primary"
                                 >
-                                    Ver video de la clase
+                                    Abrir video
                                 </a>
                             </div>
                         )}
+                    </div>
+                </article>
 
-                        {lesson.materials.length > 0 && (
-                            <div className="mt-6 border-t border-gray-100 pt-6">
-                                <h3 className="mb-3 text-sm font-semibold text-gray-800">
-                                    Materiales de la clase
-                                </h3>
-                                <ul className="space-y-2">
-                                    {lesson.materials.map((material) => (
-                                        <li
-                                            key={material.id}
-                                            className="flex items-center justify-between rounded-md border border-gray-200 px-4 py-2"
-                                        >
-                                            <div className="flex items-center gap-2 text-sm text-gray-700">
-                                                <span className="font-medium">
-                                                    {material.title}
-                                                </span>
-                                                {material.file_type && (
-                                                    <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs uppercase text-gray-500">
-                                                        {material.file_type}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            {material.is_downloadable ? (
-                                                <a
-                                                    href={route(
-                                                        'student.materials.download',
-                                                        material.id,
-                                                    )}
-                                                    className="rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-indigo-700"
-                                                >
-                                                    Descargar
-                                                </a>
-                                            ) : (
-                                                <span className="text-xs italic text-gray-400">
-                                                    Material no descargable
-                                                </span>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        <div className="mt-6 border-t border-gray-100 pt-6">
+                <aside className="space-y-6">
+                    <section className="card p-6">
+                        <ProgressBar progress={progress} />
+                        <div className="mt-5">
                             {lesson.is_completed ? (
                                 <form onSubmit={markPending}>
                                     <button
                                         type="submit"
                                         disabled={processing}
-                                        className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-50"
+                                        className="btn-ghost w-full"
                                     >
                                         Marcar como pendiente
                                     </button>
@@ -161,22 +142,73 @@ export default function Show({ lesson, progress }) {
                                     <button
                                         type="submit"
                                         disabled={processing}
-                                        className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-50"
+                                        className="btn-primary w-full"
                                     >
+                                        <Icon name="check" className="h-4 w-4" />
                                         Marcar como completada
                                     </button>
                                 </form>
                             )}
                         </div>
-                    </div>
+                    </section>
 
-                    <Link
-                        href={route('student.courses.show', lesson.course.slug)}
-                        className="inline-block text-sm text-indigo-600 hover:underline"
-                    >
-                        ← Volver al curso
-                    </Link>
-                </div>
+                    <section className="card p-6">
+                        <div className="flex items-center justify-between gap-4">
+                            <h2 className="font-display text-lg font-bold text-ink">
+                                Materiales
+                            </h2>
+                            <span className="rounded-full bg-soft px-2.5 py-0.5 text-sm font-medium text-muted">
+                                {lesson.materials.length}
+                            </span>
+                        </div>
+
+                        {lesson.materials.length > 0 ? (
+                            <ul className="mt-4 space-y-3">
+                                {lesson.materials.map((material) => (
+                                    <li
+                                        key={material.id}
+                                        className="rounded-xl border border-line bg-soft/50 p-3.5"
+                                    >
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div className="flex min-w-0 items-start gap-3">
+                                                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                                    <Icon name="doc" className="h-5 w-5" />
+                                                </span>
+                                                <div className="min-w-0">
+                                                    <p className="truncate font-medium text-ink">
+                                                        {material.title}
+                                                    </p>
+                                                    {material.file_type && (
+                                                        <p className="mt-0.5 text-xs uppercase text-muted">
+                                                            {material.file_type}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {material.is_downloadable ? (
+                                                <a
+                                                    href={route('student.materials.download', material.id)}
+                                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-white transition hover:bg-primaryHover"
+                                                >
+                                                    <Icon name="download" className="h-3.5 w-3.5" />
+                                                    Bajar
+                                                </a>
+                                            ) : (
+                                                <span className="shrink-0 text-xs text-muted">
+                                                    Solo lectura
+                                                </span>
+                                            )}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="mt-4 rounded-xl border border-dashed border-line p-4 text-sm text-muted">
+                                Esta clase no tiene materiales.
+                            </p>
+                        )}
+                    </section>
+                </aside>
             </div>
         </StudentLayout>
     );

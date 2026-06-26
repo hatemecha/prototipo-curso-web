@@ -6,6 +6,6 @@
     <p>Hola {{ $name }},</p>
     <p>Aprobaste el examen de <strong>{{ $courseTitle }}</strong> con una calificación de <strong>{{ $score }}%</strong>. ¡Felicitaciones!</p>
     <p><a href="{{ $courseUrl }}">Ver el curso</a></p>
-    <p>Saludos,<br>Equipo de Mini LMS Médico</p>
+    <p>Saludos,<br>Equipo de Aula Clínica</p>
 </body>
 </html>

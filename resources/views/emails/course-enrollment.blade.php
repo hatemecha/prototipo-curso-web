@@ -6,6 +6,6 @@
     <p>Hola {{ $name }},</p>
     <p>Te inscribiste correctamente en <strong>{{ $courseTitle }}</strong>. Ya podés ver todas las clases y materiales del curso.</p>
     <p><a href="{{ $courseUrl }}">Ir al curso</a></p>
-    <p>Saludos,<br>Equipo de Mini LMS Médico</p>
+    <p>Saludos,<br>Equipo de Aula Clínica</p>
 </body>
 </html>

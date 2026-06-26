@@ -1,12 +1,47 @@
 import StudentLayout from '@/Layouts/StudentLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
+function Icon({ name, className = 'h-5 w-5' }) {
+    const paths = {
+        check: 'M4.5 12.75l6 6 9-13.5',
+        arrow: 'M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3',
+        back: 'M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18',
+        badge: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z',
+        lock: 'M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z',
+        cap: 'M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
+    };
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d={paths[name]} />
+        </svg>
+    );
+}
+
 function formatPrice(price) {
     const value = Number(price);
     if (!value || value <= 0) {
         return 'Gratis';
     }
     return `$${value.toFixed(2)}`;
+}
+
+function ProgressBar({ progress }) {
+    return (
+        <div>
+            <div className="mb-2 flex justify-between text-sm font-medium text-muted">
+                <span>Progreso del curso</span>
+                <span className="font-semibold text-ink">
+                    {progress.completed}/{progress.total} ({progress.percent}%)
+                </span>
+            </div>
+            <div className="h-2.5 w-full overflow-hidden rounded-full bg-soft">
+                <div
+                    className="h-full rounded-full bg-gradient-to-r from-accent to-primary transition-all"
+                    style={{ width: `${progress.percent}%` }}
+                />
+            </div>
+        </div>
+    );
 }
 
 export default function Show({ course, isEnrolled, progress, exam }) {
@@ -21,212 +56,228 @@ export default function Show({ course, isEnrolled, progress, exam }) {
     return (
         <StudentLayout
             header={
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        {course.title}
-                    </h2>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p className="eyebrow">Programa del curso</p>
+                        <h1 className="mt-2 font-display text-3xl font-extrabold text-ink">
+                            {course.title}
+                        </h1>
+                    </div>
                     <Link
                         href={route('student.courses.index')}
-                        className="text-sm text-indigo-600 hover:underline"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primaryHover"
                     >
-                        ← Volver a cursos
+                        <Icon name="back" className="h-4 w-4" />
+                        Volver a cursos
                     </Link>
                 </div>
             }
         >
             <Head title={course.title} />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-4xl space-y-6 px-4 sm:px-6 lg:px-8">
-                    {flash?.success && (
-                        <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800">
-                            {flash.success}
-                        </div>
-                    )}
+            <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+                {flash?.success && (
+                    <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm font-medium text-primary">
+                        <Icon name="check" className="h-5 w-5 shrink-0" />
+                        {flash.success}
+                    </div>
+                )}
 
-                    <div className="rounded-lg bg-white p-6 shadow-sm">
-                        {course.description && (
-                            <p className="text-gray-700">{course.description}</p>
-                        )}
-                        <p className="mt-3 text-sm font-medium text-gray-600">
-                            Precio: {formatPrice(course.price)}
+                <section className="grid gap-6 lg:grid-cols-[1fr_340px]">
+                    <div className="card overflow-hidden">
+                        <div className="bg-hero p-7 text-onHero">
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-white">
+                                <Icon name="cap" className="h-3.5 w-3.5" />
+                                Curso médico online
+                            </span>
+                            <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight">
+                                {course.title}
+                            </h2>
+                        </div>
+                        <div className="p-7">
+                            <p className="text-base leading-8 text-ink">
+                                {course.description ||
+                                    'Programa médico con clases, evaluación y certificado.'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <aside className="card h-fit p-6">
+                        <p className="eyebrow">Acceso</p>
+                        <p className="mt-2 font-display text-3xl font-extrabold text-ink">
+                            {formatPrice(course.price)}
                         </p>
 
-                        <div className="mt-4">
+                        <div className="mt-5">
                             {isEnrolled ? (
-                                <div className="space-y-2">
-                                    <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
-                                        Ya estás inscripto
+                                <div className="space-y-5">
+                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                                        <Icon name="check" className="h-4 w-4" />
+                                        Inscripción activa
                                     </span>
-                                    <div>
-                                        <div className="mb-1 flex justify-between text-sm text-gray-600">
-                                            <span>Progreso del curso</span>
-                                            <span>
-                                                {progress.completed}/
-                                                {progress.total} clases (
-                                                {progress.percent}%)
-                                            </span>
-                                        </div>
-                                        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
-                                            <div
-                                                className="h-full rounded-full bg-indigo-600 transition-all"
-                                                style={{
-                                                    width: `${progress.percent}%`,
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
+                                    <ProgressBar progress={progress} />
                                 </div>
                             ) : (
                                 <form onSubmit={enroll}>
                                     <button
                                         type="submit"
                                         disabled={processing}
-                                        className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700 disabled:opacity-50"
+                                        className="btn-primary w-full"
                                     >
                                         Inscribirme
                                     </button>
+                                    <p className="mt-3 text-center text-xs text-muted">
+                                        Inscripción gratuita y simulada
+                                    </p>
                                 </form>
                             )}
                         </div>
+                    </aside>
+                </section>
+
+                {!isEnrolled && (
+                    <div className="flex items-center gap-3 rounded-2xl border border-dashed border-lineStrong bg-surface/60 p-4 text-sm text-muted">
+                        <Icon name="lock" className="h-5 w-5 shrink-0 text-muted" />
+                        Inscribite para acceder al contenido completo de las clases.
                     </div>
+                )}
 
-                    {!isEnrolled && (
-                        <div className="rounded-lg border border-dashed border-gray-300 bg-white p-4 text-sm text-gray-500">
-                            Inscribite para acceder al contenido completo de las
-                            clases.
-                        </div>
-                    )}
-
-                    {isEnrolled && exam && (
-                        <div className="rounded-lg bg-white p-6 shadow-sm">
-                            <div className="flex flex-wrap items-center justify-between gap-3">
+                {isEnrolled && exam && (
+                    <section className="card overflow-hidden">
+                        <div className="flex flex-wrap items-center justify-between gap-4 p-6">
+                            <div className="flex items-start gap-4">
+                                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-soft text-primary">
+                                    <Icon name="badge" className="h-6 w-6" />
+                                </span>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900">
-                                        Examen: {exam.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="eyebrow">Evaluación final</p>
+                                    <h2 className="mt-1 font-display text-xl font-bold text-ink">
+                                        {exam.title}
+                                    </h2>
+                                    <p className="mt-1 text-sm text-muted">
                                         Puntaje mínimo: {exam.passing_score}%
                                     </p>
                                     {exam.last_attempt && (
                                         <p
-                                            className={`mt-1 text-sm font-medium ${
-                                                exam.last_attempt.status ===
-                                                'passed'
-                                                    ? 'text-green-600'
-                                                    : 'text-red-600'
+                                            className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-sm font-semibold ${
+                                                exam.last_attempt.status === 'passed'
+                                                    ? 'bg-primary/10 text-primary'
+                                                    : 'bg-red-500/10 text-red-600'
                                             }`}
                                         >
                                             Último intento:{' '}
-                                            {exam.last_attempt.status ===
-                                            'passed'
+                                            {exam.last_attempt.status === 'passed'
                                                 ? 'Aprobado'
                                                 : 'Desaprobado'}{' '}
                                             ({exam.last_attempt.score}%)
                                         </p>
                                     )}
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    {exam.last_attempt?.certificate_id && (
-                                        <a
-                                            href={route(
-                                                'student.certificates.download',
-                                                exam.last_attempt
-                                                    .certificate_id,
-                                            )}
-                                            className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700"
-                                        >
-                                            Descargar certificado
-                                        </a>
-                                    )}
-                                    <Link
+                            </div>
+                            <div className="flex flex-wrap items-center gap-2">
+                                {exam.last_attempt?.certificate_id && (
+                                    <a
                                         href={route(
-                                            'student.courses.exam.show',
-                                            course.slug,
+                                            'student.certificates.download',
+                                            exam.last_attempt.certificate_id,
                                         )}
-                                        className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-700"
+                                        className="btn-secondary px-5 py-2.5 text-sm"
                                     >
-                                        Rendir examen
-                                    </Link>
-                                </div>
+                                        <Icon name="badge" className="h-4 w-4" />
+                                        Certificado
+                                    </a>
+                                )}
+                                <Link
+                                    href={route('student.courses.exam.show', course.slug)}
+                                    className="btn-primary"
+                                >
+                                    Rendir examen
+                                </Link>
                             </div>
                         </div>
-                    )}
+                    </section>
+                )}
+
+                <section className="space-y-4">
+                    <div className="flex items-center justify-between gap-4">
+                        <h2 className="font-display text-2xl font-bold text-ink">
+                            Programa de clases
+                        </h2>
+                        <span className="rounded-full bg-soft px-3 py-1 text-sm font-medium text-muted">
+                            {progress.total} clases
+                        </span>
+                    </div>
 
                     {course.modules.length === 0 ? (
-                        <div className="rounded-lg bg-white p-6 text-center text-gray-500 shadow-sm">
+                        <div className="card border-dashed p-10 text-center text-muted">
                             Este curso todavía no tiene contenido.
                         </div>
                     ) : (
                         course.modules.map((module, index) => (
-                            <div
-                                key={module.id}
-                                className="overflow-hidden rounded-lg bg-white shadow-sm"
-                            >
-                                <div className="border-b border-gray-100 bg-gray-50 px-6 py-4">
-                                    <h3 className="font-semibold text-gray-900">
-                                        Módulo {index + 1}: {module.title}
-                                    </h3>
+                            <div key={module.id} className="card overflow-hidden">
+                                <div className="border-b border-line bg-surface/40 px-6 py-5">
+                                    <div className="flex items-center gap-3">
+                                        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
+                                            {index + 1}
+                                        </span>
+                                        <div>
+                                            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                                                Módulo {index + 1}
+                                            </p>
+                                            <h3 className="font-display text-lg font-bold text-ink">
+                                                {module.title}
+                                            </h3>
+                                        </div>
+                                    </div>
                                     {module.description && (
-                                        <p className="mt-1 text-sm text-gray-500">
+                                        <p className="mt-3 text-sm leading-6 text-muted">
                                             {module.description}
                                         </p>
                                     )}
                                 </div>
                                 {module.lessons.length === 0 ? (
-                                    <p className="px-6 py-4 text-sm text-gray-400">
+                                    <p className="px-6 py-4 text-sm text-muted">
                                         Sin clases en este módulo.
                                     </p>
                                 ) : (
-                                    <ul className="divide-y divide-gray-100">
+                                    <ul className="divide-y divide-line">
                                         {module.lessons.map((lesson) => (
                                             <li key={lesson.id}>
                                                 {isEnrolled ? (
                                                     <Link
-                                                        href={route(
-                                                            'student.lessons.show',
-                                                            lesson.id,
-                                                        )}
-                                                        className="flex items-center justify-between px-6 py-3 text-sm text-gray-700 transition hover:bg-gray-50"
+                                                        href={route('student.lessons.show', lesson.id)}
+                                                        className="flex items-center justify-between gap-4 px-6 py-4 text-sm text-ink transition hover:bg-soft"
                                                     >
-                                                        <span className="flex items-center gap-2">
-                                                            {lesson.is_completed ? (
-                                                                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-700">
-                                                                    ✓
-                                                                </span>
-                                                            ) : (
-                                                                <span className="inline-block h-5 w-5 rounded-full border border-gray-300" />
-                                                            )}
-                                                            {lesson.title}
-                                                            {lesson.is_completed && (
-                                                                <span className="text-xs font-medium text-green-600">
-                                                                    Completada
-                                                                </span>
-                                                            )}
+                                                        <span className="flex min-w-0 items-center gap-3">
+                                                            <span
+                                                                className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
+                                                                    lesson.is_completed
+                                                                        ? 'bg-primary text-white'
+                                                                        : 'border border-lineStrong text-transparent'
+                                                                }`}
+                                                            >
+                                                                <Icon name="check" className="h-4 w-4" />
+                                                            </span>
+                                                            <span className="truncate font-medium">
+                                                                {lesson.title}
+                                                            </span>
                                                         </span>
-                                                        <span className="text-indigo-600">
-                                                            Abrir →
+                                                        <span className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary">
+                                                            Abrir
+                                                            <Icon name="arrow" className="h-4 w-4" />
                                                         </span>
                                                     </Link>
                                                 ) : (
-                                                    <div className="flex items-center justify-between px-6 py-3 text-sm text-gray-400">
-                                                        <span>
-                                                            {lesson.title}
+                                                    <div className="flex items-center justify-between gap-4 px-6 py-4 text-sm text-muted">
+                                                        <span className="flex min-w-0 items-center gap-3">
+                                                            <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-soft">
+                                                                <Icon name="lock" className="h-3.5 w-3.5" />
+                                                            </span>
+                                                            <span className="truncate">
+                                                                {lesson.title}
+                                                            </span>
                                                         </span>
-                                                        <span className="inline-flex items-center gap-1 text-gray-400">
-                                                            <svg
-                                                                className="h-4 w-4"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                strokeWidth="1.5"
-                                                                stroke="currentColor"
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                                                                />
-                                                            </svg>
+                                                        <span className="shrink-0 font-medium">
                                                             Bloqueado
                                                         </span>
                                                     </div>
@@ -238,7 +289,7 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                             </div>
                         ))
                     )}
-                </div>
+                </section>
             </div>
         </StudentLayout>
     );

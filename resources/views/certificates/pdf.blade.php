@@ -63,7 +63,7 @@
 </head>
 <body>
     <div class="frame">
-        <div class="platform">Mini LMS Médico</div>
+        <div class="platform">Aula Clínica</div>
         <div class="title">Certificado de Aprobación</div>
         <div class="subtitle">Se otorga la presente constancia a</div>
 
@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: left;">Fecha de emisión: {{ $issuedAt }}</td>
-                    <td style="text-align: right;">Plataforma: Mini LMS Médico</td>
+                    <td style="text-align: right;">Plataforma: Aula Clínica</td>
                 </tr>
             </table>
         </div>

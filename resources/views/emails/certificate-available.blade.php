@@ -7,6 +7,6 @@
     <p>Tu certificado del curso <strong>{{ $courseTitle }}</strong> ya está disponible.</p>
     <p>Número de certificado: <strong>{{ $certificateNumber }}</strong></p>
     <p><a href="{{ $certificatesUrl }}">Ver y descargar mis certificados</a></p>
-    <p>Saludos,<br>Equipo de Mini LMS Médico</p>
+    <p>Saludos,<br>Equipo de Aula Clínica</p>
 </body>
 </html>

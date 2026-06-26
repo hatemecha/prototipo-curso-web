@@ -1,4 +1,4 @@
-# Mini LMS Médico
+# Aula Clínica
 
 Proyecto de práctica para dominar **Laravel + Filament + Inertia + React + Tailwind**.
 
@@ -69,7 +69,7 @@ Para un build de producción del frontend: `npm run build`.
 Variables relevantes (sin credenciales reales):
 
 ```env
-APP_NAME="Mini LMS Médico"
+APP_NAME="Aula Clínica"
 APP_URL=http://localhost
 
 DB_CONNECTION=mysql
