@@ -1,7 +1,23 @@
 import StudentLayout from '@/Layouts/StudentLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Show({ lesson }) {
+export default function Show({ lesson, progress }) {
+    const { post, delete: destroy, processing } = useForm();
+
+    const markComplete = (e) => {
+        e.preventDefault();
+        post(route('student.lessons.complete', lesson.id), {
+            preserveScroll: true,
+        });
+    };
+
+    const markPending = (e) => {
+        e.preventDefault();
+        destroy(route('student.lessons.uncomplete', lesson.id), {
+            preserveScroll: true,
+        });
+    };
+
     return (
         <StudentLayout
             header={
@@ -22,16 +38,43 @@ export default function Show({ lesson }) {
 
             <div className="py-12">
                 <div className="mx-auto max-w-3xl space-y-6 px-4 sm:px-6 lg:px-8">
-                    <div className="rounded-lg bg-white p-6 shadow-sm">
-                        <div className="text-sm text-gray-500">
-                            <span className="font-medium text-gray-700">
-                                {lesson.course.title}
+                    <div className="rounded-lg bg-white p-4 shadow-sm">
+                        <div className="mb-1 flex justify-between text-sm text-gray-600">
+                            <span>Progreso del curso</span>
+                            <span>
+                                {progress.completed}/{progress.total} clases (
+                                {progress.percent}%)
                             </span>
-                            {lesson.module && (
-                                <>
-                                    {' · '}
-                                    <span>{lesson.module.title}</span>
-                                </>
+                        </div>
+                        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                            <div
+                                className="h-full rounded-full bg-indigo-600 transition-all"
+                                style={{ width: `${progress.percent}%` }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="rounded-lg bg-white p-6 shadow-sm">
+                        <div className="flex items-center justify-between">
+                            <div className="text-sm text-gray-500">
+                                <span className="font-medium text-gray-700">
+                                    {lesson.course.title}
+                                </span>
+                                {lesson.module && (
+                                    <>
+                                        {' · '}
+                                        <span>{lesson.module.title}</span>
+                                    </>
+                                )}
+                            </div>
+                            {lesson.is_completed ? (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+                                    ✓ Completada
+                                </span>
+                            ) : (
+                                <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
+                                    Pendiente
+                                </span>
                             )}
                         </div>
 
@@ -59,6 +102,30 @@ export default function Show({ lesson }) {
                                 </a>
                             </div>
                         )}
+
+                        <div className="mt-6 border-t border-gray-100 pt-6">
+                            {lesson.is_completed ? (
+                                <form onSubmit={markPending}>
+                                    <button
+                                        type="submit"
+                                        disabled={processing}
+                                        className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-50"
+                                    >
+                                        Marcar como pendiente
+                                    </button>
+                                </form>
+                            ) : (
+                                <form onSubmit={markComplete}>
+                                    <button
+                                        type="submit"
+                                        disabled={processing}
+                                        className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-50"
+                                    >
+                                        Marcar como completada
+                                    </button>
+                                </form>
+                            )}
+                        </div>
                     </div>
 
                     <Link

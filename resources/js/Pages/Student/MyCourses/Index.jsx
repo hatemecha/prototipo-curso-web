@@ -41,6 +41,23 @@ export default function Index({ courses }) {
                                             {course.description}
                                         </p>
                                     )}
+                                    <div className="mt-4">
+                                        <div className="mb-1 flex justify-between text-xs text-gray-600">
+                                            <span>
+                                                {course.progress.completed}/
+                                                {course.progress.total} clases
+                                            </span>
+                                            <span>{course.progress.percent}%</span>
+                                        </div>
+                                        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                                            <div
+                                                className="h-full rounded-full bg-indigo-600 transition-all"
+                                                style={{
+                                                    width: `${course.progress.percent}%`,
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
                                     <Link
                                         href={route(
                                             'student.courses.show',

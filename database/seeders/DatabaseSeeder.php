@@ -47,6 +47,18 @@ class DatabaseSeeder extends Seeder
                     'enrolled_at' => now(),
                 ],
             );
+
+            $firstLesson = $ecografia->lessons()->orderBy('order')->first();
+
+            if ($firstLesson) {
+                $student->lessonProgress()->updateOrCreate(
+                    ['lesson_id' => $firstLesson->id],
+                    [
+                        'course_id' => $ecografia->id,
+                        'completed_at' => now(),
+                    ],
+                );
+            }
         }
     }
 }

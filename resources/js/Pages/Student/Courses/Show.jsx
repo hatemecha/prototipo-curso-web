@@ -9,7 +9,7 @@ function formatPrice(price) {
     return `$${value.toFixed(2)}`;
 }
 
-export default function Show({ course, isEnrolled }) {
+export default function Show({ course, isEnrolled, progress }) {
     const flash = usePage().props.flash;
     const { post, processing } = useForm();
 
@@ -54,9 +54,29 @@ export default function Show({ course, isEnrolled }) {
 
                         <div className="mt-4">
                             {isEnrolled ? (
-                                <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
-                                    Ya estás inscripto
-                                </span>
+                                <div className="space-y-2">
+                                    <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
+                                        Ya estás inscripto
+                                    </span>
+                                    <div>
+                                        <div className="mb-1 flex justify-between text-sm text-gray-600">
+                                            <span>Progreso del curso</span>
+                                            <span>
+                                                {progress.completed}/
+                                                {progress.total} clases (
+                                                {progress.percent}%)
+                                            </span>
+                                        </div>
+                                        <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                                            <div
+                                                className="h-full rounded-full bg-indigo-600 transition-all"
+                                                style={{
+                                                    width: `${progress.percent}%`,
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             ) : (
                                 <form onSubmit={enroll}>
                                     <button
@@ -114,8 +134,20 @@ export default function Show({ course, isEnrolled }) {
                                                         )}
                                                         className="flex items-center justify-between px-6 py-3 text-sm text-gray-700 transition hover:bg-gray-50"
                                                     >
-                                                        <span>
+                                                        <span className="flex items-center gap-2">
+                                                            {lesson.is_completed ? (
+                                                                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-green-100 text-green-700">
+                                                                    ✓
+                                                                </span>
+                                                            ) : (
+                                                                <span className="inline-block h-5 w-5 rounded-full border border-gray-300" />
+                                                            )}
                                                             {lesson.title}
+                                                            {lesson.is_completed && (
+                                                                <span className="text-xs font-medium text-green-600">
+                                                                    Completada
+                                                                </span>
+                                                            )}
                                                         </span>
                                                         <span className="text-indigo-600">
                                                             Abrir →

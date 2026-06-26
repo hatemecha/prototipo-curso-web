@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\StudentLessonController;
+use App\Http\Controllers\Student\StudentLessonProgressController;
 use App\Http\Controllers\Student\StudentMyCourseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,8 @@ Route::middleware('auth')->prefix('student')->name('student.')->group(function (
     Route::post('/courses/{course:slug}/enroll', [StudentCourseController::class, 'enroll'])->name('courses.enroll');
     Route::get('/my-courses', [StudentMyCourseController::class, 'index'])->name('my-courses.index');
     Route::get('/lessons/{lesson}', [StudentLessonController::class, 'show'])->name('lessons.show');
+    Route::post('/lessons/{lesson}/complete', [StudentLessonProgressController::class, 'complete'])->name('lessons.complete');
+    Route::delete('/lessons/{lesson}/complete', [StudentLessonProgressController::class, 'uncomplete'])->name('lessons.uncomplete');
 });
 
 require __DIR__.'/auth.php';

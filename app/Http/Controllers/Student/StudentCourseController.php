@@ -47,6 +47,20 @@ class StudentCourseController extends Controller
             'modules.lessons' => fn ($query) => $query->orderBy('order'),
         ]);
 
+        $completedLessonIds = $isEnrolled
+            ? $request->user()->lessonProgress()
+                ->where('course_id', $course->id)
+                ->whereNotNull('completed_at')
+                ->pluck('lesson_id')
+                ->all()
+            : [];
+
+        $totalLessons = $course->lessons()->count();
+        $completedLessons = count($completedLessonIds);
+        $progressPercent = $totalLessons > 0
+            ? (int) round(($completedLessons / $totalLessons) * 100)
+            : 0;
+
         return Inertia::render('Student/Courses/Show', [
             'course' => [
                 'id' => $course->id,
@@ -61,10 +75,16 @@ class StudentCourseController extends Controller
                     'lessons' => $module->lessons->map(fn ($lesson) => [
                         'id' => $lesson->id,
                         'title' => $lesson->title,
+                        'is_completed' => in_array($lesson->id, $completedLessonIds, true),
                     ]),
                 ]),
             ],
             'isEnrolled' => $isEnrolled,
+            'progress' => [
+                'total' => $totalLessons,
+                'completed' => $completedLessons,
+                'percent' => $progressPercent,
+            ],
         ]);
     }
 
