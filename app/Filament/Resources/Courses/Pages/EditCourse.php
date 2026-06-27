@@ -10,6 +10,16 @@ class EditCourse extends EditRecord
 {
     protected static string $resource = CourseResource::class;
 
+    public function getHeading(): string
+    {
+        return "Administrar curso: {$this->record->title}";
+    }
+
+    public function getSubheading(): ?string
+    {
+        return 'Configurá el curso y usá las secciones relacionadas para administrar módulos, clases, examen, inscripciones y certificados.';
+    }
+
     protected function getHeaderActions(): array
     {
         return [

@@ -16,6 +16,7 @@ class LessonForm
         return $schema
             ->components([
                 Select::make('course_id')
+                    ->label('Curso')
                     ->relationship('course', 'title')
                     ->searchable()
                     ->preload()
@@ -40,18 +41,24 @@ class LessonForm
                     ->preload()
                     ->helperText('Opcional. Se filtra según el curso elegido.'),
                 TextInput::make('title')
+                    ->label('Título de la clase')
+                    ->placeholder('Ej.: Principios físicos del ultrasonido')
                     ->required()
                     ->maxLength(255),
                 Textarea::make('description')
+                    ->label('Descripción breve')
                     ->rows(2)
                     ->columnSpanFull(),
                 Textarea::make('content')
+                    ->label('Contenido de la clase')
                     ->rows(6)
                     ->columnSpanFull(),
                 TextInput::make('video_url')
+                    ->label('URL del video')
                     ->url()
                     ->maxLength(255),
                 TextInput::make('order')
+                    ->label('Orden dentro del módulo')
                     ->numeric()
                     ->minValue(0)
                     ->default(0)

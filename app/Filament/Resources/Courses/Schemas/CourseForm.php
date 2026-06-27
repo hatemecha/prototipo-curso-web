@@ -16,6 +16,8 @@ class CourseForm
         return $schema
             ->components([
                 TextInput::make('title')
+                    ->label('Título del curso')
+                    ->placeholder('Ej.: Introducción a la ecografía clínica')
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
@@ -30,15 +32,19 @@ class CourseForm
                     ->unique(ignoreRecord: true)
                     ->helperText('Se genera automáticamente desde el título; podés editarlo.'),
                 Textarea::make('description')
+                    ->label('Descripción para el alumno')
                     ->rows(4)
                     ->columnSpanFull(),
                 TextInput::make('price')
+                    ->label('Precio')
                     ->numeric()
                     ->minValue(0)
                     ->default(0)
                     ->prefix('$')
                     ->required(),
                 Select::make('status')
+                    ->label('Estado')
+                    ->helperText('Publicá el curso cuando su contenido y evaluación estén listos.')
                     ->options([
                         'draft' => 'Borrador',
                         'published' => 'Publicado',
@@ -46,6 +52,7 @@ class CourseForm
                     ->default('draft')
                     ->required(),
                 FileUpload::make('cover_image')
+                    ->label('Imagen de portada')
                     ->image()
                     ->directory('course-covers')
                     ->columnSpanFull(),

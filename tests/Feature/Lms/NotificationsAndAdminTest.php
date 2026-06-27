@@ -2,6 +2,19 @@
 
 namespace Tests\Feature\Lms;
 
+use App\Filament\Resources\CourseEnrollments\CourseEnrollmentResource;
+use App\Filament\Resources\CourseModules\CourseModuleResource;
+use App\Filament\Resources\Courses\CourseResource;
+use App\Filament\Resources\Courses\RelationManagers\LessonsRelationManager;
+use App\Filament\Resources\Courses\RelationManagers\ModulesRelationManager;
+use App\Filament\Resources\ExamOptions\ExamOptionResource;
+use App\Filament\Resources\ExamQuestions\ExamQuestionResource;
+use App\Filament\Resources\Exams\ExamResource;
+use App\Filament\Resources\Exams\RelationManagers\QuestionsRelationManager;
+use App\Filament\Resources\LessonMaterials\LessonMaterialResource;
+use App\Filament\Resources\LessonProgress\LessonProgressResource;
+use App\Filament\Resources\Lessons\LessonResource;
+use App\Filament\Resources\Lessons\RelationManagers\MaterialsRelationManager;
 use App\Mail\CertificateAvailableMail;
 use App\Mail\CourseEnrollmentMail;
 use App\Mail\ExamPassedMail;
@@ -142,7 +155,7 @@ class NotificationsAndAdminTest extends TestCase
 
         $resources = [
             'admin/courses', 'admin/course-modules', 'admin/lessons',
-            'admin/course-enrollments', 'admin/lesson-materials',
+            'admin/course-enrollments', 'admin/lesson-materials', 'admin/lesson-progress',
             'admin/exams', 'admin/exam-questions', 'admin/exam-options',
             'admin/exam-attempts', 'admin/certificates',
         ];
@@ -152,5 +165,41 @@ class NotificationsAndAdminTest extends TestCase
         }
 
         $this->actingAs($student)->get('admin/courses')->assertStatus(403);
+    }
+
+    public function test_admin_edit_pages_expose_contextual_relationships(): void
+    {
+        $admin = $this->admin();
+        [$course, $exam] = $this->courseWithExam();
+        $module = $course->modules()->create(['title' => 'Módulo clínico', 'order' => 1]);
+        $lesson = $course->lessons()->create([
+            'course_module_id' => $module->id,
+            'title' => 'Clase clínica',
+            'order' => 1,
+        ]);
+
+        $this->actingAs($admin)
+            ->get("admin/courses/{$course->id}/edit")
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get("admin/exams/{$exam->id}/edit")
+            ->assertOk();
+
+        $this->actingAs($admin)
+            ->get("admin/lessons/{$lesson->id}/edit")
+            ->assertOk();
+
+        $this->assertContains(ModulesRelationManager::class, CourseResource::getRelations());
+        $this->assertContains(LessonsRelationManager::class, CourseResource::getRelations());
+        $this->assertContains(QuestionsRelationManager::class, ExamResource::getRelations());
+        $this->assertContains(MaterialsRelationManager::class, LessonResource::getRelations());
+        $this->assertFalse(ExamQuestionResource::shouldRegisterNavigation());
+        $this->assertFalse(ExamOptionResource::shouldRegisterNavigation());
+        $this->assertFalse(CourseModuleResource::shouldRegisterNavigation());
+        $this->assertFalse(LessonResource::shouldRegisterNavigation());
+        $this->assertFalse(CourseEnrollmentResource::shouldRegisterNavigation());
+        $this->assertFalse(LessonMaterialResource::shouldRegisterNavigation());
+        $this->assertFalse(LessonProgressResource::shouldRegisterNavigation());
     }
 }

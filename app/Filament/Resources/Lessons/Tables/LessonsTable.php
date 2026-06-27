@@ -2,19 +2,26 @@
 
 namespace App\Filament\Resources\Lessons\Tables;
 
+use App\Filament\Resources\Courses\CourseResource;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class LessonsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->defaultSort('order')
+            ->defaultSort(fn (Builder $query): Builder => $query
+                ->orderBy('course_id')
+                ->orderBy('course_module_id')
+                ->orderBy('order'))
             ->columns([
                 TextColumn::make('title')
                     ->searchable()
@@ -31,7 +38,7 @@ class LessonsTable
                     ->sortable(),
                 TextColumn::make('video_url')
                     ->label('Video')
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->placeholder('—')
                     ->limit(30),
             ])
@@ -48,7 +55,13 @@ class LessonsTable
                     ->preload(),
             ])
             ->recordActions([
-                EditAction::make(),
+                ActionGroup::make([
+                    EditAction::make()->label('Editar clase'),
+                    Action::make('editCourse')
+                        ->label('Editar curso')
+                        ->icon('heroicon-o-arrow-top-right-on-square')
+                        ->url(fn ($record): string => CourseResource::getUrl('edit', ['record' => $record->course_id])),
+                ]),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

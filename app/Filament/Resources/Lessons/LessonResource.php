@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Lessons;
 use App\Filament\Resources\Lessons\Pages\CreateLesson;
 use App\Filament\Resources\Lessons\Pages\EditLesson;
 use App\Filament\Resources\Lessons\Pages\ListLessons;
+use App\Filament\Resources\Lessons\RelationManagers\MaterialsRelationManager;
 use App\Filament\Resources\Lessons\Schemas\LessonForm;
 use App\Filament\Resources\Lessons\Tables\LessonsTable;
 use App\Models\Lesson;
@@ -16,6 +17,8 @@ use Filament\Tables\Table;
 
 class LessonResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $model = Lesson::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPlayCircle;
@@ -43,7 +46,7 @@ class LessonResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MaterialsRelationManager::class,
         ];
     }
 

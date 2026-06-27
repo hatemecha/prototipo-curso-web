@@ -20,9 +20,11 @@ class ExamQuestionForm
                     ->relationship('exam', 'title')
                     ->searchable()
                     ->preload()
-                    ->required(),
+                    ->required()
+                    ->helperText('Preferentemente administrá las preguntas desde la edición del examen.'),
                 Textarea::make('question_text')
                     ->label('Pregunta')
+                    ->placeholder('Escribí una consigna clara y completa.')
                     ->required()
                     ->rows(2)
                     ->columnSpanFull(),
@@ -39,11 +41,12 @@ class ExamQuestionForm
                     ->default(1)
                     ->required(),
                 Repeater::make('options')
-                    ->label('Opciones')
+                    ->label('Opciones de respuesta')
                     ->relationship('options')
                     ->schema([
                         Textarea::make('option_text')
-                            ->label('Texto')
+                            ->label('Opción')
+                            ->placeholder('Texto de la respuesta')
                             ->required()
                             ->rows(1)
                             ->columnSpanFull(),
@@ -67,7 +70,7 @@ class ExamQuestionForm
                         },
                     ])
                     ->columnSpanFull()
-                    ->helperText('Marcá al menos una opción como correcta.'),
+                    ->helperText('Las opciones se administran dentro de la pregunta. Marcá al menos una como correcta.'),
             ]);
     }
 }

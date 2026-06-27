@@ -12,6 +12,8 @@ use Filament\Tables\Table;
 
 class LessonProgressResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $model = LessonProgress::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;

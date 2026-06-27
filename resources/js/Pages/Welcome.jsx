@@ -190,7 +190,7 @@ export default function Welcome({ auth }) {
                                 <a
                                     key={link.href}
                                     href={link.href}
-                                    className="rounded-full px-4 py-2 text-base font-medium text-ink/80 transition hover:text-ink"
+                                    className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:bg-soft hover:text-ink"
                                 >
                                     {link.label}
                                 </a>
@@ -208,7 +208,7 @@ export default function Welcome({ auth }) {
                                 <>
                                     <Link
                                         href={route('login')}
-                                        className="hidden rounded-full bg-soft px-6 py-2.5 text-base font-bold text-ink transition hover:bg-cream sm:inline-flex"
+                                        className="hidden rounded-lg border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:bg-soft sm:inline-flex"
                                     >
                                         Ingresar
                                     </Link>
@@ -221,19 +221,19 @@ export default function Welcome({ auth }) {
                     </div>
                 </header>
 
-                {/* Hero — pastel-mesh backdrop + floating product UI mockup */}
-                <section className="relative overflow-hidden bg-mesh">
+                {/* Hero — clean surface + floating product UI mockup */}
+                <section className="relative overflow-hidden border-b border-line bg-surface">
                     <div className="relative mx-auto grid max-w-[1240px] items-center gap-12 px-5 pb-20 pt-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pb-28 lg:pt-24">
                         <div className="animate-fade-up">
-                            <span className="inline-flex items-center gap-2 rounded-full bg-cream px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-ink">
+                            <span className="inline-flex items-center gap-2 rounded-md bg-soft px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted">
                                 Formación médica continua
                             </span>
 
-                            <h1 className="mt-6 text-[2.75rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-ink sm:text-6xl">
+                            <h1 className="mt-6 text-[2.5rem] font-bold leading-[1.1] tracking-[-0.02em] text-ink sm:text-5xl">
                                 Cursos médicos que terminás y certificás.
                             </h1>
 
-                            <p className="mt-6 max-w-xl text-lg leading-[1.55] text-ink/80">
+                            <p className="mt-6 max-w-xl text-lg leading-[1.55] text-muted">
                                 Aprendé ecografía, radiología y diagnóstico por
                                 imágenes con clases concretas, evaluaciones reales y
                                 un certificado verificable al aprobar. Estudiá a tu
@@ -315,8 +315,8 @@ export default function Welcome({ auth }) {
                     </div>
                 </section>
 
-                {/* Features — cream cards */}
-                <section className="bg-mesh">
+                {/* Features */}
+                <section className="bg-page">
                     <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
                         <SectionHeading
                             eyebrow="Por qué Aula Clínica"
@@ -326,17 +326,14 @@ export default function Welcome({ auth }) {
 
                         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             {features.map((feature) => (
-                                <div
-                                    key={feature.title}
-                                    className="rounded-2xl bg-cream p-8"
-                                >
-                                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-surface text-primary">
-                                        <Icon name={feature.icon} className="h-6 w-6" />
+                                <div key={feature.title} className="card p-6">
+                                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-primary">
+                                        <Icon name={feature.icon} className="h-5 w-5" />
                                     </div>
-                                    <h3 className="mt-5 text-xl font-bold text-ink">
+                                    <h3 className="mt-4 text-base font-semibold text-ink">
                                         {feature.title}
                                     </h3>
-                                    <p className="mt-2 text-base leading-[1.55] text-ink/75">
+                                    <p className="mt-2 text-sm leading-[1.55] text-muted">
                                         {feature.text}
                                     </p>
                                 </div>
@@ -421,7 +418,7 @@ export default function Welcome({ auth }) {
                 </section>
 
                 {/* Testimonials */}
-                <section id="opiniones" className="bg-mesh">
+                <section id="opiniones" className="bg-page">
                     <div className="mx-auto max-w-[1240px] px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
                         <SectionHeading
                             eyebrow="Opiniones"
@@ -479,28 +476,28 @@ export default function Welcome({ auth }) {
                     </div>
                 </section>
 
-                {/* Closing aubergine band — brand signature */}
+                {/* Closing brand band */}
                 <section className="mx-auto max-w-[1240px] px-5 pb-24 sm:px-6 lg:px-8">
-                    <div className="rounded-2xl bg-hero px-6 py-20 text-center text-onHero sm:px-12 sm:py-24">
+                    <div className="rounded-xl bg-hero px-6 py-16 text-center text-onHero sm:px-12">
                         <div className="mx-auto max-w-2xl">
-                            <h2 className="text-3xl font-extrabold leading-tight tracking-[-0.02em] text-white sm:text-5xl">
+                            <h2 className="text-2xl font-bold leading-tight tracking-[-0.01em] text-white sm:text-4xl">
                                 Empezá hoy tu próximo curso médico
                             </h2>
-                            <p className="mt-5 text-lg leading-[1.55] text-onHeroMute">
+                            <p className="mt-4 text-base leading-[1.55] text-onHeroMute">
                                 Creá tu cuenta gratis, inscribite y obtené tu primer
                                 certificado esta misma semana.
                             </p>
-                            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+                            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                                 <Link
                                     href={ctaHref}
-                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-lg font-bold text-primary transition hover:bg-onHeroMute"
+                                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-primary shadow-sm transition hover:bg-onHeroMute"
                                 >
                                     {auth.user ? 'Ir a mi panel' : 'Crear cuenta gratis'}
-                                    <Icon name="arrow" className="h-5 w-5" />
+                                    <Icon name="arrow" className="h-4 w-4" />
                                 </Link>
                                 <Link
                                     href={browseHref}
-                                    className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/40 px-7 py-3 text-lg font-bold text-white transition hover:bg-white/10"
+                                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
                                 >
                                     Ver cursos
                                 </Link>
@@ -509,17 +506,18 @@ export default function Welcome({ auth }) {
                     </div>
                 </section>
 
-                {/* Aubergine footer band */}
-                <footer className="bg-hero text-onHero">
+                {/* Footer */}
+                <footer className="border-t border-line bg-surface text-ink">
                     <div className="mx-auto max-w-[1240px] px-6 py-14 sm:px-8">
                         <div className="flex flex-col items-start justify-between gap-10 sm:flex-row">
                             <div className="max-w-sm">
                                 <Link href="/" className="flex items-center gap-2.5">
-                                    <span className="text-lg font-extrabold text-white">
+                                    <ApplicationLogo className="h-8 w-8 text-primary" />
+                                    <span className="text-lg font-bold text-primary">
                                         Aula Clínica
                                     </span>
                                 </Link>
-                                <p className="mt-4 text-sm leading-[1.55] text-onHeroMute">
+                                <p className="mt-4 text-sm leading-[1.55] text-muted">
                                     Plataforma de cursos médicos online con
                                     evaluaciones y certificados. Proyecto de práctica
                                     técnica (Mini LMS).
@@ -528,28 +526,28 @@ export default function Welcome({ auth }) {
 
                             <div className="grid grid-cols-2 gap-10 sm:gap-16">
                                 <div>
-                                    <p className="text-sm font-bold uppercase tracking-[0.12em] text-white">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-muted">
                                         Plataforma
                                     </p>
-                                    <ul className="mt-4 space-y-2.5 text-sm text-onHeroMute">
-                                        <li><a href="#cursos" className="transition hover:text-white">Cursos</a></li>
-                                        <li><a href="#como-funciona" className="transition hover:text-white">Cómo funciona</a></li>
-                                        <li><a href="#certificacion" className="transition hover:text-white">Certificación</a></li>
+                                    <ul className="mt-4 space-y-2.5 text-sm text-muted">
+                                        <li><a href="#cursos" className="transition hover:text-ink">Cursos</a></li>
+                                        <li><a href="#como-funciona" className="transition hover:text-ink">Cómo funciona</a></li>
+                                        <li><a href="#certificacion" className="transition hover:text-ink">Certificación</a></li>
                                     </ul>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-bold uppercase tracking-[0.12em] text-white">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-muted">
                                         Cuenta
                                     </p>
-                                    <ul className="mt-4 space-y-2.5 text-sm text-onHeroMute">
-                                        <li><Link href={route('login')} className="transition hover:text-white">Ingresar</Link></li>
-                                        <li><Link href={route('register')} className="transition hover:text-white">Crear cuenta</Link></li>
+                                    <ul className="mt-4 space-y-2.5 text-sm text-muted">
+                                        <li><Link href={route('login')} className="transition hover:text-ink">Ingresar</Link></li>
+                                        <li><Link href={route('register')} className="transition hover:text-ink">Crear cuenta</Link></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/15 pt-6 text-xs text-onHeroMute sm:flex-row">
+                        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-line pt-6 text-xs text-muted sm:flex-row">
                             <p>© {new Date().getFullYear()} Aula Clínica. Todos los derechos reservados.</p>
                             <p>Hecho con Laravel · Inertia · React · Tailwind</p>
                         </div>
@@ -575,70 +573,47 @@ function SectionHeading({ eyebrow, title, subtitle }) {
 }
 
 function CourseCard({ course, href }) {
-    const featured = course.featured;
     return (
-        <article
-            className={`flex flex-col overflow-hidden rounded-2xl border ${
-                featured
-                    ? 'border-transparent bg-hero text-onHero'
-                    : 'border-line bg-surface text-ink'
-            }`}
-        >
-            <div className="relative h-36 bg-mesh">
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-4">
-                    <span className="rounded-full bg-cream px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-ink">
-                        {course.tag}
-                    </span>
-                    <span className="rounded-full bg-surface px-3 py-1 text-xs font-bold text-primary">
-                        {course.level}
-                    </span>
-                </div>
+        <article className="card flex flex-col p-6 text-ink">
+            <div className="flex items-center justify-between gap-2">
+                <span className="rounded-md bg-soft px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-muted">
+                    {course.tag}
+                </span>
+                <span className="rounded-md bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+                    {course.level}
+                </span>
             </div>
 
-            <div className="flex flex-1 flex-col p-7">
-                <div className="flex items-center gap-1.5 text-sm font-semibold">
-                    <Stars className="h-3.5 w-3.5" tone={featured ? 'text-white' : 'text-primary'} />
-                    <span className={featured ? 'text-onHeroMute' : 'text-muted'}>
-                        {course.rating}
-                    </span>
-                </div>
-                <h3 className="mt-3 text-xl font-bold leading-snug">
-                    {course.title}
-                </h3>
-                <p className={`mt-2 flex-1 text-base leading-[1.5] ${featured ? 'text-onHeroMute' : 'text-ink/75'}`}>
-                    {course.description}
-                </p>
+            <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold">
+                <Stars className="h-3.5 w-3.5" tone="text-primary" />
+                <span className="text-muted">{course.rating}</span>
+            </div>
+            <h3 className="mt-2 text-base font-semibold leading-snug">
+                {course.title}
+            </h3>
+            <p className="mt-2 flex-1 text-sm leading-[1.5] text-muted">
+                {course.description}
+            </p>
 
-                <div className={`mt-5 flex items-center gap-4 text-sm font-medium ${featured ? 'text-onHeroMute' : 'text-muted'}`}>
-                    <span className="inline-flex items-center gap-1.5">
-                        <Icon name="layers" className={`h-4 w-4 ${featured ? 'text-white' : 'text-primary'}`} />
-                        {course.modules} módulos
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                        <Icon name="clock" className={`h-4 w-4 ${featured ? 'text-white' : 'text-primary'}`} />
-                        {course.hours} h
-                    </span>
-                </div>
+            <div className="mt-5 flex items-center gap-4 text-sm font-medium text-muted">
+                <span className="inline-flex items-center gap-1.5">
+                    <Icon name="layers" className="h-4 w-4 text-primary" />
+                    {course.modules} módulos
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                    <Icon name="clock" className="h-4 w-4 text-primary" />
+                    {course.hours} h
+                </span>
+            </div>
 
-                <div className={`mt-6 flex items-center justify-between border-t pt-5 ${featured ? 'border-white/20' : 'border-line'}`}>
-                    <span className="text-2xl font-extrabold tracking-tight">
-                        {course.price}
-                    </span>
-                    {featured ? (
-                        <Link
-                            href={href}
-                            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-primary transition hover:bg-onHeroMute"
-                        >
-                            Ver curso
-                            <Icon name="arrow" className="h-4 w-4" />
-                        </Link>
-                    ) : (
-                        <Link href={href} className="btn-primary px-5 py-2.5 text-sm">
-                            Ver curso
-                            <Icon name="arrow" className="h-4 w-4" />
-                        </Link>
-                    )}
-                </div>
+            <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
+                <span className="text-lg font-bold tracking-tight">
+                    {course.price}
+                </span>
+                <Link href={href} className="btn-primary">
+                    Ver curso
+                    <Icon name="arrow" className="h-4 w-4" />
+                </Link>
             </div>
         </article>
     );
@@ -647,27 +622,27 @@ function CourseCard({ course, href }) {
 function HeroPreview() {
     return (
         <div className="relative mx-auto max-w-md lg:max-w-none">
-            <div className="overflow-hidden rounded-xl bg-surface shadow-lift">
-                <div className="bg-hero p-6 text-onHero">
+            <div className="overflow-hidden rounded-xl border border-line bg-surface shadow-lift">
+                <div className="border-b border-line bg-soft/60 p-6">
                     <div className="flex items-center justify-between">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-white">
+                        <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
                             En curso
                         </span>
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white">
+                        <span className="inline-flex items-center gap-1.5 rounded-md bg-soft px-2.5 py-1 text-xs font-semibold text-muted">
                             <Icon name="badge" className="h-3.5 w-3.5" />
                             Certificado
                         </span>
                     </div>
-                    <h3 className="mt-6 text-2xl font-bold leading-snug">
+                    <h3 className="mt-6 text-xl font-bold leading-snug text-ink">
                         Introducción a la Ecografía Clínica
                     </h3>
                     <div className="mt-5">
-                        <div className="flex items-center justify-between text-xs font-medium text-onHeroMute">
+                        <div className="flex items-center justify-between text-xs font-medium text-muted">
                             <span>Progreso del curso</span>
                             <span>67%</span>
                         </div>
-                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/15">
-                            <div className="h-full w-2/3 rounded-full bg-white" />
+                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-soft">
+                            <div className="h-full w-2/3 rounded-full bg-primary" />
                         </div>
                     </div>
                 </div>
@@ -681,7 +656,7 @@ function HeroPreview() {
                     ].map((lesson) => (
                         <div
                             key={lesson.t}
-                            className="flex items-center gap-3 rounded-xl border border-line bg-soft px-3.5 py-3"
+                            className="flex items-center gap-3 rounded-lg border border-line bg-soft px-3.5 py-3"
                         >
                             <span
                                 className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
@@ -724,12 +699,12 @@ function HeroPreview() {
 function CertificatePreview() {
     return (
         <div className="relative mx-auto max-w-lg">
-            <div className="rounded-2xl bg-cream p-2">
-                <div className="rounded-xl border border-primary/15 bg-surface p-8 text-center">
-                    <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-soft text-primary">
-                        <Icon name="badge" className="h-7 w-7" />
+            <div className="card p-2">
+                <div className="rounded-lg border border-line bg-surface p-8 text-center">
+                    <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-lg bg-soft text-primary">
+                        <Icon name="badge" className="h-6 w-6" />
                     </div>
-                    <p className="mt-5 text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                    <p className="mt-5 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                         Certificado de aprobación
                     </p>
                     <p className="mt-5 text-sm text-muted">Se certifica que</p>

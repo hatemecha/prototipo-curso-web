@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\Exams\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -16,17 +14,15 @@ class ExamsTable
     {
         return $table
             ->columns([
-                TextColumn::make('course.title')
-                    ->label('Curso')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('title')
-                    ->label('Título')
+                    ->label('Examen')
+                    ->description(fn ($record): string => $record->course->title)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('passing_score')
                     ->label('Aprobación')
-                    ->suffix('%'),
+                    ->suffix('%')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('questions_count')
                     ->counts('questions')
                     ->label('Preguntas'),
@@ -42,12 +38,7 @@ class ExamsTable
                     ->preload(),
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                EditAction::make()->label('Administrar'),
             ]);
     }
 }

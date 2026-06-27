@@ -22,9 +22,11 @@ class ExamForm
                     ->validationMessages([
                         'unique' => 'Este curso ya tiene un examen asociado.',
                     ])
+                    ->helperText('Cada curso puede tener un único examen. También podés crearlo desde la edición del curso.')
                     ->required(),
                 TextInput::make('title')
                     ->label('Título')
+                    ->placeholder('Ej.: Evaluación final del curso')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('passing_score')
@@ -41,6 +43,7 @@ class ExamForm
                     ->helperText('Dejar vacío para intentos ilimitados.'),
                 Toggle::make('is_active')
                     ->label('Activo')
+                    ->helperText('Solo los exámenes activos pueden ser rendidos por alumnos.')
                     ->default(true),
             ]);
     }

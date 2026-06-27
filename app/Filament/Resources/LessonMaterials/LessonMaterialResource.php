@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 
 class LessonMaterialResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $model = LessonMaterial::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;

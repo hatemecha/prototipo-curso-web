@@ -17,10 +17,10 @@ function PillLink({ href, active, children }) {
     return (
         <Link
             href={href}
-            className={`rounded-full px-4 py-2 text-sm font-bold transition ${
+            className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
                 active
                     ? 'bg-soft text-primary'
-                    : 'text-ink/70 hover:bg-soft hover:text-ink'
+                    : 'text-muted hover:bg-soft hover:text-ink'
             }`}
         >
             {children}
@@ -75,9 +75,9 @@ export default function StudentLayout({ header, children }) {
                                 <Dropdown.Trigger>
                                     <button
                                         type="button"
-                                        className="inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-3 text-sm font-bold text-ink transition hover:border-lineStrong hover:bg-soft focus:outline-none"
+                                        className="inline-flex items-center gap-2 rounded-lg border border-line bg-surface py-1.5 pl-1.5 pr-3 text-sm font-semibold text-ink transition hover:border-lineStrong hover:bg-soft focus:outline-none"
                                     >
-                                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-soft text-xs font-bold text-primary">
+                                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-soft text-xs font-semibold text-primary">
                                             {initials}
                                         </span>
                                         {user.name}
@@ -146,7 +146,7 @@ export default function StudentLayout({ header, children }) {
 
                     <div className="border-t border-line pb-3 pt-4">
                         <div className="flex items-center gap-3 px-4">
-                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-soft text-sm font-bold text-primary">
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-sm font-semibold text-primary">
                                 {initials}
                             </span>
                             <div>
@@ -176,8 +176,8 @@ export default function StudentLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className="border-b border-line bg-surface/40">
-                    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                <header className="border-b border-line bg-surface">
+                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>
                 </header>

@@ -6,15 +6,15 @@ function ResultBanner({ attempt, passingScore }) {
     const passed = attempt.status === 'passed';
     return (
         <div
-            className={`flex items-start gap-4 rounded-2xl border p-5 ${
+            className={`flex items-start gap-4 rounded-lg border p-5 ${
                 passed
-                    ? 'border-primary/30 bg-primary/10 text-primary'
-                    : 'border-red-400/30 bg-red-500/10 text-red-600'
+                    ? 'border-success/30 bg-success/10 text-success'
+                    : 'border-danger/30 bg-danger/10 text-danger'
             }`}
         >
             <span
-                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                    passed ? 'bg-primary/15' : 'bg-red-500/15'
+                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${
+                    passed ? 'bg-success/15' : 'bg-danger/15'
                 }`}
             >
                 <Icon name={passed ? 'check' : 'x'} className="h-6 w-6" />
@@ -69,7 +69,7 @@ export default function Show({
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p className="eyebrow">Evaluación final</p>
-                        <h1 className="mt-2 font-display text-3xl font-extrabold text-ink">
+                        <h1 className="mt-1 font-display text-2xl font-bold text-ink">
                             {exam.title}
                         </h1>
                     </div>
@@ -87,7 +87,7 @@ export default function Show({
 
             <div className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
                 {flash?.success && (
-                    <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm font-medium text-primary">
+                    <div className="flex items-center gap-3 rounded-lg border border-success/30 bg-success/10 p-4 text-sm font-medium text-success">
                         <Icon name="check" className="h-5 w-5 shrink-0" />
                         {flash.success}
                     </div>
@@ -101,9 +101,9 @@ export default function Show({
                         </span>
                     </p>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                        <div className="flex items-center gap-3 rounded-xl bg-soft/70 p-4">
-                            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                                <Icon name="target" className="h-6 w-6" />
+                        <div className="flex items-center gap-3 rounded-lg bg-soft/70 p-4">
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                <Icon name="target" className="h-5 w-5" />
                             </span>
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-wide text-muted">
@@ -114,9 +114,9 @@ export default function Show({
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3 rounded-xl bg-soft/70 p-4">
-                            <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                                <Icon name="repeat" className="h-6 w-6" />
+                        <div className="flex items-center gap-3 rounded-lg bg-soft/70 p-4">
+                            <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                <Icon name="repeat" className="h-5 w-5" />
                             </span>
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-wide text-muted">
@@ -143,8 +143,8 @@ export default function Show({
                     <form onSubmit={submit} className="space-y-5">
                         {exam.questions.map((question, index) => (
                             <fieldset key={question.id} className="card p-6">
-                                <legend className="float-none mb-4 font-display text-base font-bold text-ink">
-                                    <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
+                                <legend className="float-none mb-4 font-display text-base font-semibold text-ink">
+                                    <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold text-primary">
                                         {index + 1}
                                     </span>
                                     {question.question_text}
@@ -159,7 +159,7 @@ export default function Show({
                                         return (
                                             <label
                                                 key={option.id}
-                                                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${
+                                                className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm transition ${
                                                     selected
                                                         ? 'border-primary bg-primary/5 text-ink'
                                                         : 'border-line bg-surface text-ink hover:border-lineStrong hover:bg-soft'
@@ -184,12 +184,12 @@ export default function Show({
                         ))}
 
                         {errors.answers && (
-                            <p className="text-sm font-medium text-red-600">
+                            <p className="text-sm font-medium text-danger">
                                 {errors.answers}
                             </p>
                         )}
 
-                        <div className="sticky bottom-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-page/80 p-4 backdrop-blur-xl">
+                        <div className="sticky bottom-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-line bg-surface/90 p-4 shadow-card backdrop-blur-xl">
                             <p className="text-sm font-medium text-muted">
                                 Respondidas{' '}
                                 <span className="font-bold text-ink">

@@ -10,10 +10,10 @@ export default function Dashboard({ stats, latestCourses }) {
             header={
                 <div>
                     <p className="eyebrow">Área de alumno</p>
-                        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">
-                            Hola, {user.name.split(' ')[0]} 👋
-                        </h1>
-                    <p className="mt-1 text-muted">
+                    <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink">
+                        Hola, {user.name.split(' ')[0]}
+                    </h1>
+                    <p className="mt-1 text-sm text-muted">
                         Seguí formándote y sumá tu próximo certificado.
                     </p>
                 </div>
@@ -25,63 +25,63 @@ export default function Dashboard({ stats, latestCourses }) {
                 <div className="grid gap-5 sm:grid-cols-3">
                     <Link
                         href={route('student.courses.index')}
-                        className="card group flex items-center justify-between p-6 transition hover:-translate-y-0.5 hover:shadow-lift"
+                        className="card group flex items-center justify-between p-5 transition hover:border-lineStrong"
                     >
                         <div>
-                            <p className="text-4xl font-extrabold text-ink">
+                            <p className="text-3xl font-bold text-ink">
                                 {stats.publishedCourses}
                             </p>
                             <p className="mt-1 text-sm font-medium text-muted">
                                 Cursos disponibles
                             </p>
                         </div>
-                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary">
-                            <Icon name="book" className="h-6 w-6" />
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-primary">
+                            <Icon name="book" className="h-5 w-5" />
                         </span>
                     </Link>
 
                     <Link
                         href={route('student.my-courses.index')}
-                        className="card group flex items-center justify-between p-6 transition hover:-translate-y-0.5 hover:shadow-lift"
+                        className="card group flex items-center justify-between p-5 transition hover:border-lineStrong"
                     >
                         <div>
-                            <p className="text-lg font-bold text-ink">
+                            <p className="text-base font-semibold text-ink">
                                 Mis cursos
                             </p>
                             <p className="mt-1 text-sm text-muted">
                                 Retomá donde lo dejaste
                             </p>
                         </div>
-                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary">
-                            <Icon name="layers" className="h-6 w-6" />
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-primary">
+                            <Icon name="layers" className="h-5 w-5" />
                         </span>
                     </Link>
 
                     <Link
                         href={route('student.certificates.index')}
-                        className="card group flex items-center justify-between p-6 transition hover:-translate-y-0.5 hover:shadow-lift"
+                        className="card group flex items-center justify-between p-5 transition hover:border-lineStrong"
                     >
                         <div>
-                            <p className="text-lg font-bold text-ink">
+                            <p className="text-base font-semibold text-ink">
                                 Certificados
                             </p>
                             <p className="mt-1 text-sm text-muted">
                                 Descargá tus credenciales
                             </p>
                         </div>
-                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary">
-                            <Icon name="badge" className="h-6 w-6" />
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-primary">
+                            <Icon name="badge" className="h-5 w-5" />
                         </span>
                     </Link>
                 </div>
 
                 <section>
-                    <div className="mb-5 flex items-center justify-between gap-4">
+                    <div className="mb-4 flex items-center justify-between gap-4">
                         <div>
-                            <h2 className="text-2xl font-extrabold tracking-tight text-ink">
+                            <h2 className="text-lg font-semibold tracking-tight text-ink">
                                 Últimos cursos
                             </h2>
-                            <p className="mt-1 text-sm text-muted">
+                            <p className="mt-0.5 text-sm text-muted">
                                 Novedades publicadas en la plataforma
                             </p>
                         </div>
@@ -95,28 +95,28 @@ export default function Dashboard({ stats, latestCourses }) {
                     </div>
 
                     {latestCourses.length > 0 ? (
-                        <div className="grid gap-5 md:grid-cols-3">
+                        <div className="grid gap-4 md:grid-cols-3">
                             {latestCourses.map((course) => (
                                 <Link
                                     key={course.id}
                                     href={route('student.courses.show', course.slug)}
-                                    className="card group flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lift"
+                                    className="card group flex flex-col p-5 transition hover:border-lineStrong"
                                 >
-                                    <div className="h-24 bg-mesh" />
-                                    <div className="flex flex-1 flex-col p-5">
-                                        <h3 className="text-base font-bold leading-snug text-ink">
-                                            {course.title}
-                                        </h3>
-                                        {course.description && (
-                                            <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-muted">
-                                                {course.description}
-                                            </p>
-                                        )}
-                                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition group-hover:gap-2.5">
-                                            Ver programa
-                                            <Icon name="arrow" className="h-4 w-4" />
-                                        </span>
-                                    </div>
+                                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-primary">
+                                        <Icon name="book" className="h-5 w-5" />
+                                    </span>
+                                    <h3 className="mt-4 text-base font-semibold leading-snug text-ink">
+                                        {course.title}
+                                    </h3>
+                                    {course.description && (
+                                        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-muted">
+                                            {course.description}
+                                        </p>
+                                    )}
+                                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition group-hover:gap-2.5">
+                                        Ver programa
+                                        <Icon name="arrow" className="h-4 w-4" />
+                                    </span>
                                 </Link>
                             ))}
                         </div>

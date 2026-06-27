@@ -9,12 +9,22 @@ use App\Http\Controllers\Student\StudentLessonController;
 use App\Http\Controllers\Student\StudentLessonProgressController;
 use App\Http\Controllers\Student\StudentMaterialController;
 use App\Http\Controllers\Student\StudentMyCourseController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
+
+Route::get('/admin/salir', function (Request $request) {
+    Auth::guard('web')->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+})->middleware('auth')->name('admin.logout');
 
 Route::get('/dashboard', function () {
     $user = request()->user();

@@ -8,10 +8,10 @@ export default function Index({ certificates }) {
             header={
                 <div>
                     <p className="eyebrow">Credenciales</p>
-                    <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">
+                    <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink">
                         Mis certificados
                     </h1>
-                    <p className="mt-1 text-muted">
+                    <p className="mt-1 text-sm text-muted">
                         Descargá los certificados de los cursos que aprobaste.
                     </p>
                 </div>
@@ -22,8 +22,8 @@ export default function Index({ certificates }) {
             <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
                 {certificates.length === 0 ? (
                     <div className="card border-dashed p-12 text-center">
-                        <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-soft text-primary">
-                            <Icon name="badge" className="h-7 w-7" />
+                        <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-lg bg-soft text-primary">
+                            <Icon name="badge" className="h-6 w-6" />
                         </span>
                         <p className="mt-5 text-muted">
                             Todavía no tenés certificados.
@@ -42,18 +42,18 @@ export default function Index({ certificates }) {
                 ) : (
                     <div className="grid gap-5 sm:grid-cols-2">
                         {certificates.map((cert) => (
-                            <div key={cert.id} className="card flex flex-col p-6">
+                            <div key={cert.id} className="card flex flex-col p-5">
                                 <div className="flex items-start justify-between gap-4">
-                                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-soft text-primary">
-                                        <Icon name="badge" className="h-6 w-6" />
+                                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-soft text-primary">
+                                        <Icon name="badge" className="h-5 w-5" />
                                     </span>
                                     {cert.score !== null && (
-                                        <span className="rounded-full bg-soft px-3 py-1 text-xs font-bold text-primary">
+                                        <span className="rounded-md bg-success/10 px-2.5 py-1 text-xs font-semibold text-success">
                                             {cert.score}%
                                         </span>
                                     )}
                                 </div>
-                                <h2 className="mt-4 text-lg font-bold leading-snug text-ink">
+                                <h2 className="mt-4 text-base font-semibold leading-snug text-ink">
                                     {cert.course}
                                 </h2>
                                 <dl className="mt-4 flex-1 space-y-2 text-sm">

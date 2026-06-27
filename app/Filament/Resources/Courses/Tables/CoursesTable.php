@@ -2,28 +2,23 @@
 
 namespace App\Filament\Resources\Courses\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CoursesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withCount(['modules', 'lessons']))
             ->columns([
                 TextColumn::make('title')
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('slug')
-                    ->searchable()
-                    ->toggleable(),
-                TextColumn::make('price')
-                    ->money('USD')
-                    ->sortable(),
+                    ->sortable()
+                    ->wrap(),
                 TextColumn::make('status')
                     ->badge()
                     ->colors([
@@ -35,16 +30,9 @@ class CoursesTable
                         'published' => 'Publicado',
                         default => $state,
                     }),
-                TextColumn::make('modules_count')
-                    ->counts('modules')
-                    ->label('Módulos'),
-                TextColumn::make('lessons_count')
-                    ->counts('lessons')
-                    ->label('Clases'),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('content_summary')
+                    ->label('Contenido')
+                    ->getStateUsing(fn ($record): string => "{$record->modules_count} módulos · {$record->lessons_count} clases"),
             ])
             ->filters([
                 SelectFilter::make('status')
@@ -54,12 +42,7 @@ class CoursesTable
                     ]),
             ])
             ->recordActions([
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                EditAction::make()->label('Administrar'),
             ]);
     }
 }

@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 
 class ExamQuestionResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $model = ExamQuestion::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;

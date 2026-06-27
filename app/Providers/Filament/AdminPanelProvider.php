@@ -2,20 +2,20 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\AdminOverview;
 use App\Http\Middleware\HandleInertiaRequests;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
-use Filament\Widgets\AccountWidget;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -40,12 +40,10 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#4a154b'),
             ])
-            ->navigationItems([
-                NavigationItem::make('Ver sitio')
-                    ->url('/')
-                    ->icon(Heroicon::OutlinedHome)
-                    ->sort(-100),
-            ])
+            ->renderHook(
+                PanelsRenderHook::SIDEBAR_NAV_END,
+                fn (): string => view('filament.sidebar-logout')->render(),
+            )
             ->userMenuItems([
                 Action::make('view_site')
                     ->label('Ver sitio')
@@ -60,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
+                AdminOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,

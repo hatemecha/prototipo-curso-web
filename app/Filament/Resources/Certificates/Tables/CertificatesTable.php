@@ -27,14 +27,15 @@ class CertificatesTable
                 TextColumn::make('user.email')
                     ->label('Email')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('course.title')
                     ->label('Curso')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('attempt.score')
                     ->label('Score')
-                    ->suffix('%'),
+                    ->suffix('%')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('issued_at')
                     ->label('Emitido')
                     ->dateTime()

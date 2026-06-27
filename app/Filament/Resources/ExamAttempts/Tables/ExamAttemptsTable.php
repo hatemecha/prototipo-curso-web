@@ -21,7 +21,8 @@ class ExamAttemptsTable
                 TextColumn::make('exam.title')
                     ->label('Examen')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('exam.course.title')
                     ->label('Curso')
                     ->searchable(),
@@ -46,7 +47,8 @@ class ExamAttemptsTable
                     ->label('Enviado')
                     ->dateTime()
                     ->placeholder('—')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('exam_id')

@@ -45,7 +45,7 @@ export default function Show({ lesson, progress }) {
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p className="eyebrow">Clase</p>
-                        <h1 className="mt-2 font-display text-3xl font-extrabold text-ink">
+                        <h1 className="mt-1 font-display text-2xl font-bold text-ink">
                             {lesson.title}
                         </h1>
                     </div>
@@ -62,34 +62,32 @@ export default function Show({ lesson, progress }) {
             <Head title={lesson.title} />
 
             <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_320px] lg:px-8">
-                <article className="card overflow-hidden">
-                    <div className="bg-hero p-7 text-onHero">
-                        <p className="text-sm font-semibold text-onHeroMute">
-                            {lesson.course.title}
-                            {lesson.module && ` · ${lesson.module.title}`}
-                        </p>
-                        <h2 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight">
-                            {lesson.title}
-                        </h2>
-                    </div>
+                <article className="card p-6 sm:p-7">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                        {lesson.course.title}
+                        {lesson.module && ` · ${lesson.module.title}`}
+                    </p>
+                    <h2 className="mt-2 text-xl font-bold leading-tight text-ink">
+                        {lesson.title}
+                    </h2>
 
-                    <div className="p-7">
+                    <div className="mt-5 border-t border-line pt-5">
                         {lesson.description && (
-                            <p className="text-base leading-8 text-ink">
+                            <p className="text-sm leading-7 text-ink">
                                 {lesson.description}
                             </p>
                         )}
 
                         {lesson.content && (
-                            <div className="mt-5 whitespace-pre-line border-t border-line pt-5 leading-8 text-ink">
+                            <div className="mt-4 whitespace-pre-line leading-7 text-ink">
                                 {lesson.content}
                             </div>
                         )}
 
                         {lesson.video_url && (
-                            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-soft/60 p-5">
+                            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-line bg-soft/60 p-4">
                                 <div className="flex items-center gap-3">
-                                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                                         <Icon name="play" className="h-5 w-5" />
                                     </span>
                                     <p className="font-semibold text-ink">
@@ -140,10 +138,10 @@ export default function Show({ lesson, progress }) {
 
                     <section className="card p-6">
                         <div className="flex items-center justify-between gap-4">
-                            <h2 className="font-display text-lg font-bold text-ink">
+                            <h2 className="font-display text-base font-semibold text-ink">
                                 Materiales
                             </h2>
-                            <span className="rounded-full bg-soft px-2.5 py-0.5 text-sm font-medium text-muted">
+                            <span className="rounded-md bg-soft px-2 py-0.5 text-sm font-medium text-muted">
                                 {lesson.materials.length}
                             </span>
                         </div>
@@ -153,7 +151,7 @@ export default function Show({ lesson, progress }) {
                                 {lesson.materials.map((material) => (
                                     <li
                                         key={material.id}
-                                        className="rounded-xl border border-line bg-soft/50 p-3.5"
+                                        className="rounded-lg border border-line bg-soft/50 p-3.5"
                                     >
                                         <div className="flex items-start justify-between gap-3">
                                             <div className="flex min-w-0 items-start gap-3">
@@ -174,7 +172,7 @@ export default function Show({ lesson, progress }) {
                                             {material.is_downloadable ? (
                                                 <a
                                                     href={route('student.materials.download', material.id)}
-                                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-4 py-1.5 text-xs font-bold text-white transition hover:bg-primaryHover"
+                                                    className="inline-flex shrink-0 items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-primaryHover"
                                                 >
                                                     <Icon name="download" className="h-3.5 w-3.5" />
                                                     Bajar
@@ -189,7 +187,7 @@ export default function Show({ lesson, progress }) {
                                 ))}
                             </ul>
                         ) : (
-                            <p className="mt-4 rounded-xl border border-dashed border-line p-4 text-sm text-muted">
+                            <p className="mt-4 rounded-lg border border-dashed border-line p-4 text-sm text-muted">
                                 Esta clase no tiene materiales.
                             </p>
                         )}

@@ -8,13 +8,16 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CourseModulesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->defaultSort('order')
+            ->defaultSort(fn (Builder $query): Builder => $query
+                ->orderBy('course_id')
+                ->orderBy('order'))
             ->columns([
                 TextColumn::make('title')
                     ->searchable()

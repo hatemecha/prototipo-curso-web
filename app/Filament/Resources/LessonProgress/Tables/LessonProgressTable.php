@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\LessonProgress\Tables;
 
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -25,10 +24,12 @@ class LessonProgressTable
                 TextColumn::make('lesson.title')
                     ->label('Clase')
                     ->searchable(),
-                IconColumn::make('completed_at')
-                    ->label('Completada')
-                    ->boolean()
-                    ->getStateUsing(fn ($record): bool => $record->completed_at !== null),
+                TextColumn::make('status')
+                    ->label('Estado')
+                    ->badge()
+                    ->color(fn ($state): string => $state ? 'success' : 'gray')
+                    ->getStateUsing(fn ($record): bool => $record->completed_at !== null)
+                    ->formatStateUsing(fn (bool $state): string => $state ? 'Completada' : 'Pendiente'),
                 TextColumn::make('completed_at')
                     ->label('Fecha')
                     ->dateTime()

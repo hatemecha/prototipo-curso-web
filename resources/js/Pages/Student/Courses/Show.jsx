@@ -19,9 +19,9 @@ function ProgressBar({ progress }) {
                     {progress.completed}/{progress.total} ({progress.percent}%)
                 </span>
             </div>
-            <div className="h-2.5 w-full overflow-hidden rounded-full bg-soft">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-soft">
                 <div
-                    className="h-full rounded-full bg-gradient-to-r from-accent to-primary transition-all"
+                    className="h-full rounded-full bg-primary transition-all"
                     style={{ width: `${progress.percent}%` }}
                 />
             </div>
@@ -44,7 +44,7 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p className="eyebrow">Programa del curso</p>
-                        <h1 className="mt-2 font-display text-3xl font-extrabold text-ink">
+                        <h1 className="mt-1 font-display text-2xl font-bold text-ink">
                             {course.title}
                         </h1>
                     </div>
@@ -62,41 +62,37 @@ export default function Show({ course, isEnrolled, progress, exam }) {
 
             <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
                 {flash?.success && (
-                    <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm font-medium text-primary">
+                    <div className="flex items-center gap-3 rounded-lg border border-success/30 bg-success/10 p-4 text-sm font-medium text-success">
                         <Icon name="check" className="h-5 w-5 shrink-0" />
                         {flash.success}
                     </div>
                 )}
 
                 <section className="grid gap-6 lg:grid-cols-[1fr_340px]">
-                    <div className="card overflow-hidden">
-                        <div className="bg-hero p-7 text-onHero">
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-white">
-                                <Icon name="cap" className="h-3.5 w-3.5" />
-                                Curso médico online
-                            </span>
-                            <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight">
-                                {course.title}
-                            </h2>
-                        </div>
-                        <div className="p-7">
-                            <p className="text-base leading-8 text-ink">
-                                {course.description ||
-                                    'Programa médico con clases, evaluación y certificado.'}
-                            </p>
-                        </div>
+                    <div className="card p-6">
+                        <span className="inline-flex items-center gap-1.5 rounded-md bg-soft px-2.5 py-1 text-xs font-semibold text-muted">
+                            <Icon name="cap" className="h-3.5 w-3.5" />
+                            Curso médico online
+                        </span>
+                        <h2 className="mt-4 text-xl font-bold leading-tight text-ink">
+                            {course.title}
+                        </h2>
+                        <p className="mt-4 border-t border-line pt-4 text-sm leading-7 text-ink">
+                            {course.description ||
+                                'Programa médico con clases, evaluación y certificado.'}
+                        </p>
                     </div>
 
                     <aside className="card h-fit p-6">
                         <p className="eyebrow">Acceso</p>
-                        <p className="mt-2 font-display text-3xl font-extrabold text-ink">
+                        <p className="mt-1 font-display text-2xl font-bold text-ink">
                             {formatPrice(course.price)}
                         </p>
 
                         <div className="mt-5">
                             {isEnrolled ? (
                                 <div className="space-y-5">
-                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                                    <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-sm font-semibold text-primary">
                                         <Icon name="check" className="h-4 w-4" />
                                         Inscripción activa
                                     </span>
@@ -121,7 +117,7 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                 </section>
 
                 {!isEnrolled && (
-                    <div className="flex items-center gap-3 rounded-2xl border border-dashed border-lineStrong bg-surface/60 p-4 text-sm text-muted">
+                    <div className="flex items-center gap-3 rounded-lg border border-dashed border-lineStrong bg-surface p-4 text-sm text-muted">
                         <Icon name="lock" className="h-5 w-5 shrink-0 text-muted" />
                         Inscribite para acceder al contenido completo de las clases.
                     </div>
@@ -131,12 +127,12 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                     <section className="card overflow-hidden">
                         <div className="flex flex-wrap items-center justify-between gap-4 p-6">
                             <div className="flex items-start gap-4">
-                                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-soft text-primary">
+                                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-soft text-primary">
                                     <Icon name="badge" className="h-6 w-6" />
                                 </span>
                                 <div>
                                     <p className="eyebrow">Evaluación final</p>
-                                    <h2 className="mt-1 font-display text-xl font-bold text-ink">
+                                    <h2 className="mt-1 font-display text-lg font-bold text-ink">
                                         {exam.title}
                                     </h2>
                                     <p className="mt-1 text-sm text-muted">
@@ -144,10 +140,10 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                                     </p>
                                     {exam.last_attempt && (
                                         <p
-                                            className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-sm font-semibold ${
+                                            className={`mt-2 inline-flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-sm font-semibold ${
                                                 exam.last_attempt.status === 'passed'
-                                                    ? 'bg-primary/10 text-primary'
-                                                    : 'bg-red-500/10 text-red-600'
+                                                    ? 'bg-success/10 text-success'
+                                                    : 'bg-danger/10 text-danger'
                                             }`}
                                         >
                                             Último intento:{' '}
@@ -185,10 +181,10 @@ export default function Show({ course, isEnrolled, progress, exam }) {
 
                 <section className="space-y-4">
                     <div className="flex items-center justify-between gap-4">
-                        <h2 className="font-display text-2xl font-bold text-ink">
+                        <h2 className="font-display text-lg font-bold text-ink">
                             Programa de clases
                         </h2>
-                        <span className="rounded-full bg-soft px-3 py-1 text-sm font-medium text-muted">
+                        <span className="rounded-md bg-soft px-2.5 py-1 text-sm font-medium text-muted">
                             {progress.total} clases
                         </span>
                     </div>
@@ -200,9 +196,9 @@ export default function Show({ course, isEnrolled, progress, exam }) {
                     ) : (
                         course.modules.map((module, index) => (
                             <div key={module.id} className="card overflow-hidden">
-                                <div className="border-b border-line bg-surface/40 px-6 py-5">
+                                <div className="border-b border-line bg-soft/50 px-6 py-4">
                                     <div className="flex items-center gap-3">
-                                        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
+                                        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold text-primary">
                                             {index + 1}
                                         </span>
                                         <div>

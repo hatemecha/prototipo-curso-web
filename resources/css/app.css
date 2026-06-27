@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
- * Token source of truth: DESIGN.md (Slacc-inspired design language).
- * Aubergine #4a154b is the single brand color; cream/lavender canvases,
- * pastel-mesh gradients, pill buttons (90px), Inter, blue inline links.
+ * Design tokens — neutral admin look aligned with the Filament panel.
+ * Aubergine (#4a154b) is the single brand/primary accent, used sparingly for
+ * actions, links and active states. Flat gray canvases, white surfaces with
+ * hairline borders and a soft shadow. No gradients, no decorative meshes.
  */
 
 @layer base {
@@ -15,84 +16,84 @@
     .theme-light {
         color-scheme: light;
         --color-primary: 74 21 75;          /* #4a154b aubergine */
-        --color-primary-hover: 97 31 105;   /* #611f69 press */
-        --color-primary-tint: 89 36 102;    /* #592466 */
-        --color-ink: 29 29 29;              /* #1d1d1d */
-        --color-muted: 105 105 105;         /* #696969 */
-        --color-line: 230 230 230;          /* #e6e6e6 hairline */
-        --color-line-strong: 209 209 209;
-        --color-page: 255 255 255;          /* canvas */
-        --color-surface: 255 255 255;
-        --color-soft: 249 240 255;          /* #f9f0ff lavender */
-        --color-cream: 244 237 228;         /* #f4ede4 */
-        --color-lavender: 249 240 255;      /* #f9f0ff */
-        --color-hero: 74 21 75;             /* aubergine band/surface */
+        --color-primary-hover: 97 31 105;   /* #611f69 */
+        --color-primary-tint: 124 58 130;
+        --color-ink: 17 24 39;              /* gray-900 */
+        --color-muted: 107 114 128;         /* gray-500 */
+        --color-line: 229 231 235;          /* gray-200 hairline */
+        --color-line-strong: 209 213 219;   /* gray-300 */
+        --color-page: 249 250 251;          /* gray-50 canvas */
+        --color-surface: 255 255 255;       /* white cards */
+        --color-soft: 243 244 246;          /* gray-100 subtle fill */
+        --color-cream: 243 244 246;
+        --color-lavender: 243 244 246;
+        --color-hero: 74 21 75;             /* solid brand band */
         --color-on-hero: 255 255 255;
-        --color-on-hero-mute: 217 189 222;  /* #d9bdde */
-        --color-link: 18 100 163;           /* #1264a3 */
-        --color-link-hover: 56 96 190;      /* #3860be */
-        --color-success: 0 122 90;          /* #007a5a */
-        --color-error: 204 65 23;           /* #cc4117 */
-        --color-accent: 74 21 75;           /* alias → brand */
-        --color-accent-soft: 249 240 255;   /* lavender */
-        --shadow-card: 0 1px 2px rgb(29 29 29 / 0.04), 0 10px 30px -18px rgb(29 29 29 / 0.18);
-        --shadow-lift: rgb(0 0 0 / 0.10) 0 0 32px 0;
+        --color-on-hero-mute: 216 199 219;
+        --color-link: 74 21 75;             /* link = brand */
+        --color-link-hover: 97 31 105;
+        --color-success: 22 163 74;         /* green-600 */
+        --color-error: 220 38 38;           /* red-600 */
+        --color-accent: 74 21 75;
+        --color-accent-soft: 243 244 246;
+        --shadow-card: 0 1px 2px 0 rgb(17 24 39 / 0.05);
+        --shadow-lift: 0 4px 12px -2px rgb(17 24 39 / 0.10), 0 2px 6px -2px rgb(17 24 39 / 0.06);
     }
 
     @media (prefers-color-scheme: dark) {
         :root:not(.theme-light) {
             color-scheme: dark;
-            --color-primary: 178 96 188;        /* lifted aubergine for dark */
-            --color-primary-hover: 201 134 209;
-            --color-primary-tint: 122 47 133;
-            --color-ink: 244 240 246;
-            --color-muted: 178 162 186;
-            --color-line: 58 42 64;
-            --color-line-strong: 84 64 92;
-            --color-page: 22 12 25;             /* deep aubergine-black */
-            --color-surface: 35 23 40;
-            --color-soft: 46 30 52;
-            --color-cream: 46 38 33;
-            --color-lavender: 46 30 52;
-            --color-hero: 48 16 54;             /* aubergine band */
+            --color-primary: 192 132 199;       /* lifted aubergine */
+            --color-primary-hover: 209 160 215;
+            --color-primary-tint: 124 58 130;
+            --color-ink: 243 244 246;           /* gray-100 */
+            --color-muted: 156 163 175;         /* gray-400 */
+            --color-line: 38 43 54;             /* gray-800-ish */
+            --color-line-strong: 55 65 81;      /* gray-700 */
+            --color-page: 3 7 18;               /* gray-950 */
+            --color-surface: 17 24 39;          /* gray-900 */
+            --color-soft: 31 41 55;             /* gray-800 */
+            --color-cream: 31 41 55;
+            --color-lavender: 31 41 55;
+            --color-hero: 59 26 64;             /* deep aubergine band */
             --color-on-hero: 255 255 255;
             --color-on-hero-mute: 209 184 215;
-            --color-link: 138 178 224;
-            --color-link-hover: 174 202 236;
-            --color-success: 52 199 153;
-            --color-error: 248 113 96;
-            --color-accent: 178 96 188;
-            --color-accent-soft: 46 30 52;
-            --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.7);
-            --shadow-lift: rgb(0 0 0 / 0.55) 0 0 40px 0;
+            --color-link: 192 132 199;
+            --color-link-hover: 214 173 219;
+            --color-success: 74 222 128;        /* green-400 */
+            --color-error: 248 113 113;         /* red-400 */
+            --color-accent: 192 132 199;
+            --color-accent-soft: 31 41 55;
+            --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+            --shadow-lift: 0 6px 16px -4px rgb(0 0 0 / 0.6);
         }
     }
 
     .theme-dark {
         color-scheme: dark;
-        --color-primary: 178 96 188;
-        --color-primary-hover: 201 134 209;
-        --color-primary-tint: 122 47 133;
-        --color-ink: 244 240 246;
-        --color-muted: 178 162 186;
-        --color-line: 58 42 64;
-        --color-line-strong: 84 64 92;
-        --color-page: 22 12 25;
-        --color-surface: 35 23 40;
-        --color-soft: 46 30 52;
-        --color-cream: 46 38 33;
-        --color-lavender: 46 30 52;
-        --color-hero: 48 16 54;
+        --color-primary: 192 132 199;
+        --color-primary-hover: 209 160 215;
+        --color-primary-tint: 124 58 130;
+        --color-ink: 243 244 246;
+        --color-muted: 156 163 175;
+        --color-line: 38 43 54;
+        --color-line-strong: 55 65 81;
+        --color-page: 3 7 18;
+        --color-surface: 17 24 39;
+        --color-soft: 31 41 55;
+        --color-cream: 31 41 55;
+        --color-lavender: 31 41 55;
+        --color-hero: 59 26 64;
         --color-on-hero: 255 255 255;
         --color-on-hero-mute: 209 184 215;
-        --color-link: 138 178 224;
-        --color-link-hover: 174 202 236;
-        --color-success: 52 199 153;
-        --color-error: 248 113 96;
-        --color-accent: 178 96 188;
-        --color-accent-soft: 46 30 52;
-        --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.7);
-        --shadow-lift: rgb(0 0 0 / 0.55) 0 0 40px 0;
+        --color-link: 192 132 199;
+        --color-link-hover: 214 173 219;
+        --color-success: 74 222 128;
+        --color-error: 248 113 113;
+        --color-accent: 192 132 199;
+        --color-accent-soft: 31 41 55;
+        --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+        --shadow-lift: 0 6px 16px -4px rgb(0 0 0 / 0.6);
     }
 
     html {
@@ -107,14 +108,13 @@
         text-rendering: optimizeLegibility;
     }
 
-    /* Display tier: tight negative tracking per DESIGN.md */
     h1,
     h2,
     h3,
     h4 {
         font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.012em;
+        font-weight: 600;
+        letter-spacing: -0.006em;
     }
 
     ::selection {
@@ -127,64 +127,40 @@
     .card {
         background: rgb(var(--color-surface));
         border: 1px solid rgb(var(--color-line));
-        border-radius: 1rem; /* rounded.xl 16px */
+        border-radius: 0.75rem; /* rounded-xl */
         box-shadow: var(--shadow-card);
     }
 
-    /* Pill buttons — 90px radius, generous padding (DESIGN.md) */
     .btn-primary {
-        @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-bold text-white transition hover:bg-primaryHover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:cursor-not-allowed disabled:opacity-60;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-primaryHover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page disabled:cursor-not-allowed disabled:opacity-60;
     }
 
     .btn-secondary {
-        @apply inline-flex items-center justify-center gap-2 rounded-full bg-soft px-7 py-3 text-base font-bold text-ink transition hover:bg-cream focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:bg-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page;
     }
 
     .btn-outline {
-        @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-surface px-7 py-3 text-base font-bold text-primary transition hover:bg-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:bg-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-page;
     }
 
     /* legacy alias */
     .btn-ghost {
-        @apply btn-outline;
+        @apply btn-secondary;
     }
 
     .eyebrow {
-        @apply text-xs font-bold uppercase tracking-[0.16em] text-primary;
+        @apply text-xs font-semibold uppercase tracking-wider text-muted;
     }
 
     .link-blue {
-        @apply font-semibold text-link underline-offset-2 transition hover:text-linkHover hover:underline;
+        @apply font-medium text-link underline-offset-2 transition hover:text-linkHover hover:underline;
     }
 }
 
 @layer utilities {
-    /* Pastel-mesh gradient backdrop — the brand's signature depth */
+    /* Flat neutral fill — replaces the old decorative mesh gradient. */
     .bg-mesh {
-        background-color: rgb(var(--color-lavender));
-        background-image:
-            radial-gradient(at 12% 18%, rgba(255, 224, 214, 0.85) 0px, transparent 45%),
-            radial-gradient(at 85% 12%, rgba(233, 216, 255, 0.9) 0px, transparent 48%),
-            radial-gradient(at 72% 78%, rgba(214, 240, 224, 0.75) 0px, transparent 45%),
-            radial-gradient(at 28% 88%, rgba(255, 240, 230, 0.8) 0px, transparent 45%);
-    }
-
-    .theme-dark .bg-mesh {
-        background-color: rgb(var(--color-surface));
-        background-image:
-            radial-gradient(at 12% 18%, rgba(122, 47, 133, 0.45) 0px, transparent 45%),
-            radial-gradient(at 85% 12%, rgba(74, 21, 75, 0.6) 0px, transparent 48%),
-            radial-gradient(at 72% 80%, rgba(56, 96, 190, 0.25) 0px, transparent 45%);
-    }
-
-    @media (prefers-color-scheme: dark) {
-        :root:not(.theme-light) .bg-mesh {
-            background-color: rgb(var(--color-surface));
-            background-image:
-                radial-gradient(at 12% 18%, rgba(122, 47, 133, 0.45) 0px, transparent 45%),
-                radial-gradient(at 85% 12%, rgba(74, 21, 75, 0.6) 0px, transparent 48%),
-                radial-gradient(at 72% 80%, rgba(56, 96, 190, 0.25) 0px, transparent 45%);
-        }
+        background-color: rgb(var(--color-soft));
     }
 
     .shadow-card {
@@ -198,7 +174,7 @@
     @keyframes fade-up {
         from {
             opacity: 0;
-            transform: translateY(16px);
+            transform: translateY(12px);
         }
         to {
             opacity: 1;
@@ -207,7 +183,7 @@
     }
 
     .animate-fade-up {
-        animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     @media (prefers-reduced-motion: reduce) {

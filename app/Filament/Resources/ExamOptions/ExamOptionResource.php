@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 
 class ExamOptionResource extends Resource
 {
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $model = ExamOption::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedListBullet;
