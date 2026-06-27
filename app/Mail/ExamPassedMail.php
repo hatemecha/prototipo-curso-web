@@ -19,8 +19,7 @@ class ExamPassedMail extends Mailable
         public User $user,
         public Course $course,
         public ExamAttempt $attempt,
-    ) {
-    }
+    ) {}
 
     public function envelope(): Envelope
     {

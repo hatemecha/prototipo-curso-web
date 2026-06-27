@@ -13,9 +13,7 @@ class CertificateAvailableMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Certificate $certificate)
-    {
-    }
+    public function __construct(public Certificate $certificate) {}
 
     public function envelope(): Envelope
     {

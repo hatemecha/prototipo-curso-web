@@ -3,9 +3,9 @@
 namespace Tests\Feature\Lms;
 
 use App\Models\Course;
-use App\Models\Lesson;
 use App\Models\LessonMaterial;
 use App\Models\User;
+use App\Services\CourseProgressService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -108,6 +108,29 @@ class CourseFlowTest extends TestCase
 
         $this->actingAs($student)->delete("student/lessons/{$lesson->id}/complete");
         $this->assertDatabaseCount('lesson_progress', 0);
+    }
+
+    public function test_course_progress_service_reports_completed_lessons(): void
+    {
+        $student = $this->student();
+        $course = $this->publishedCourse();
+        $lesson = $course->lessons()->first();
+        $course->lessons()->create([
+            'course_module_id' => $lesson->course_module_id,
+            'title' => 'Clase 2',
+            'order' => 2,
+        ]);
+        $student->lessonProgress()->create([
+            'course_id' => $course->id,
+            'lesson_id' => $lesson->id,
+            'completed_at' => now(),
+        ]);
+
+        $service = app(CourseProgressService::class);
+
+        $this->assertSame([$lesson->id], $service->completedLessonIds($student, $course)->all());
+        $this->assertTrue($service->isCompleted($student, $lesson));
+        $this->assertSame(50, $service->percentageFor($student, $course));
     }
 
     public function test_my_courses_shows_only_enrolled(): void

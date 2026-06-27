@@ -43,6 +43,19 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect('/admin');
     }
 
+    public function test_inertia_navigation_performs_a_full_page_visit_to_the_admin_panel(): void
+    {
+        $user = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($user)
+            ->withHeader('X-Inertia', 'true')
+            ->get('/admin/courses');
+
+        $response
+            ->assertStatus(409)
+            ->assertHeader('X-Inertia-Location', url('/admin/courses'));
+    }
+
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
         $user = User::factory()->create();

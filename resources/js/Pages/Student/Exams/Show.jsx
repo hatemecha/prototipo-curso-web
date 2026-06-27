@@ -1,20 +1,6 @@
+import Icon from '@/Components/Icon';
 import StudentLayout from '@/Layouts/StudentLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-
-function Icon({ name, className = 'h-5 w-5' }) {
-    const paths = {
-        back: 'M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18',
-        check: 'M4.5 12.75l6 6 9-13.5',
-        x: 'M6 18L18 6M6 6l12 12',
-        target: 'M12 21a9 9 0 100-18 9 9 0 000 18zm0-4a5 5 0 100-10 5 5 0 000 10zm0-3a2 2 0 100-4 2 2 0 000 4z',
-        repeat: 'M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99',
-    };
-    return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d={paths[name]} />
-        </svg>
-    );
-}
 
 function ResultBanner({ attempt, passingScore }) {
     const passed = attempt.status === 'passed';

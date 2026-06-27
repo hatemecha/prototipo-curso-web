@@ -33,7 +33,7 @@ class LessonProgressResource extends Resource
     {
         return [
             //
-    ];
+        ];
     }
 
     public static function getPages(): array

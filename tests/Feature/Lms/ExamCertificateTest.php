@@ -4,6 +4,7 @@ namespace Tests\Feature\Lms;
 
 use App\Models\Certificate;
 use App\Models\Course;
+use App\Models\Exam;
 use App\Models\User;
 use App\Services\CertificateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,7 +26,7 @@ class ExamCertificateTest extends TestCase
         ]);
     }
 
-    /** @return array{0: Course, 1: \App\Models\Exam, 2: array} */
+    /** @return array{0: Course, 1: Exam, 2: array} */
     private function courseWithExam(string $slug = 'eco', bool $active = true, ?int $maxAttempts = null): array
     {
         $course = Course::create([

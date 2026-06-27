@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Mail\CourseEnrollmentMail;
 use App\Models\Course;
+use App\Services\CourseProgressService;
 use App\Support\SafeMail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class StudentCourseController extends Controller
         ]);
     }
 
-    public function show(Request $request, Course $course): Response
+    public function show(Request $request, Course $course, CourseProgressService $progressService): Response
     {
         abort_unless($course->status === 'published', 404);
 
@@ -50,18 +51,12 @@ class StudentCourseController extends Controller
         ]);
 
         $completedLessonIds = $isEnrolled
-            ? $request->user()->lessonProgress()
-                ->where('course_id', $course->id)
-                ->whereNotNull('completed_at')
-                ->pluck('lesson_id')
-                ->all()
+            ? $progressService->completedLessonIds($request->user(), $course)->all()
             : [];
 
         $totalLessons = $course->lessons()->count();
         $completedLessons = count($completedLessonIds);
-        $progressPercent = $totalLessons > 0
-            ? (int) round(($completedLessons / $totalLessons) * 100)
-            : 0;
+        $progressPercent = $progressService->percentage($completedLessons, $totalLessons);
 
         $exam = $isEnrolled
             ? $course->exam()->where('is_active', true)->withCount('questions')->first()

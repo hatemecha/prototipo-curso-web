@@ -1,5 +1,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
+import Icon from '@/Components/Icon';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import ThemeToggle from '@/Components/ThemeToggle';
 import { Link, usePage } from '@inertiajs/react';
@@ -80,17 +81,10 @@ export default function StudentLayout({ header, children }) {
                                             {initials}
                                         </span>
                                         {user.name}
-                                        <svg
+                                        <Icon
+                                            name="chevron-down"
                                             className="h-4 w-4 text-muted"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
+                                        />
                                     </button>
                                 </Dropdown.Trigger>
 
@@ -119,35 +113,14 @@ export default function StudentLayout({ header, children }) {
                                 }
                                 className="inline-flex items-center justify-center rounded-lg p-2 text-ink transition hover:bg-soft focus:bg-soft focus:outline-none"
                             >
-                                <svg
+                                <Icon
+                                    name={
+                                        showingNavigationDropdown
+                                            ? 'close'
+                                            : 'bars'
+                                    }
                                     className="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        className={
-                                            !showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={
-                                            showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
+                                />
                             </button>
                         </div>
                     </div>

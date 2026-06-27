@@ -14,9 +14,7 @@ class CourseEnrollmentMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public User $user, public Course $course)
-    {
-    }
+    public function __construct(public User $user, public Course $course) {}
 
     public function envelope(): Envelope
     {

@@ -1,17 +1,6 @@
+import Icon from '@/Components/Icon';
 import StudentLayout from '@/Layouts/StudentLayout';
 import { Head, Link } from '@inertiajs/react';
-
-function Icon({ name, className = 'h-4 w-4' }) {
-    const paths = {
-        arrow: 'M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3',
-        check: 'M4.5 12.75l6 6 9-13.5',
-    };
-    return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d={paths[name]} />
-        </svg>
-    );
-}
 
 export default function Index({ courses }) {
     return (

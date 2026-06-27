@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Services\CourseProgressService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class StudentMyCourseController extends Controller
 {
-    public function index(Request $request): Response
+    public function index(Request $request, CourseProgressService $progressService): Response
     {
         $user = $request->user();
 
@@ -26,7 +27,7 @@ class StudentMyCourseController extends Controller
             ->groupBy('course_id')
             ->pluck('total', 'course_id');
 
-        $courses = $courses->map(function ($course) use ($completedByCourse) {
+        $courses = $courses->map(function ($course) use ($completedByCourse, $progressService) {
             $total = $course->lessons_count;
             $completed = (int) ($completedByCourse[$course->id] ?? 0);
 
@@ -39,7 +40,7 @@ class StudentMyCourseController extends Controller
                 'progress' => [
                     'total' => $total,
                     'completed' => $completed,
-                    'percent' => $total > 0 ? (int) round(($completed / $total) * 100) : 0,
+                    'percent' => $progressService->percentage($completed, $total),
                 ],
             ];
         });

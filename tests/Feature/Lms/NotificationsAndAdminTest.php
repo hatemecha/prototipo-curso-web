@@ -7,6 +7,7 @@ use App\Mail\CourseEnrollmentMail;
 use App\Mail\ExamPassedMail;
 use App\Mail\WelcomeStudentMail;
 use App\Models\Course;
+use App\Models\Exam;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -37,7 +38,7 @@ class NotificationsAndAdminTest extends TestCase
         ]);
     }
 
-    /** @return array{0: Course, 1: \App\Models\Exam, 2: array} */
+    /** @return array{0: Course, 1: Exam, 2: array} */
     private function courseWithExam(string $slug = 'eco'): array
     {
         $course = Course::create([

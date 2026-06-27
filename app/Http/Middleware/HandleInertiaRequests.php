@@ -2,8 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Inertia\Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -13,6 +16,15 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ($request->isMethod('GET') && $request->is('admin', 'admin/*') && $request->header('X-Inertia')) {
+            return Inertia::location($request->fullUrl());
+        }
+
+        return parent::handle($request, $next);
+    }
 
     /**
      * Determine the current asset version.

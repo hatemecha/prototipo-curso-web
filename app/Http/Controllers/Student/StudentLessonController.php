@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Services\CourseProgressService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class StudentLessonController extends Controller
 {
-    public function show(Request $request, Lesson $lesson): Response
+    public function show(Request $request, Lesson $lesson, CourseProgressService $progressService): Response
     {
         $lesson->load(['course', 'module', 'materials']);
 
@@ -18,19 +19,13 @@ class StudentLessonController extends Controller
 
         abort_unless($request->user()->isEnrolledIn($lesson->course), 403);
 
-        $isCompleted = $request->user()->lessonProgress()
-            ->where('lesson_id', $lesson->id)
-            ->whereNotNull('completed_at')
-            ->exists();
+        $isCompleted = $progressService->isCompleted($request->user(), $lesson);
 
         $totalLessons = $lesson->course->lessons()->count();
-        $completedLessons = $request->user()->lessonProgress()
-            ->where('course_id', $lesson->course_id)
-            ->whereNotNull('completed_at')
+        $completedLessons = $progressService
+            ->completedLessonIds($request->user(), $lesson->course)
             ->count();
-        $progressPercent = $totalLessons > 0
-            ? (int) round(($completedLessons / $totalLessons) * 100)
-            : 0;
+        $progressPercent = $progressService->percentage($completedLessons, $totalLessons);
 
         return Inertia::render('Student/Lessons/Show', [
             'lesson' => [
